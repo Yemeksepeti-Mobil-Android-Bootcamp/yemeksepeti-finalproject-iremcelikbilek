@@ -41,5 +41,20 @@
         <argument
             android:name="restaurantData"
             app:argType="com.iremcelikbilek.yemeksepetiapp.data.entity.restaurantList.RestaurantData" />
+        <action
+            android:id="@+id/action_menuListFragment_to_menuDetailFragment"
+            app:destination="@id/menuDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/menuDetailFragment"
+        tools:layout="@layout/fragment_menu_detail"
+        android:name="com.iremcelikbilek.yemeksepetiapp.ui.menuDetail.MenuDetailFragment"
+        android:label="MenuDetailFragment" >
+        <argument
+            android:name="menuItem"
+            app:argType="com.iremcelikbilek.yemeksepetiapp.data.entity.common.Menu" />
+        <argument
+            android:name="restaurantName"
+            app:argType="string" />
     </fragment>
 </navigation>

@@ -12,6 +12,7 @@
     app:cardCornerRadius="10dp">
 
     <LinearLayout
+        android:id="@+id/item_menu_list_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"

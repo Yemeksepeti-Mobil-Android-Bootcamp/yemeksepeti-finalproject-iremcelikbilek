@@ -6,10 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.iremcelikbilek.yemeksepetiapp.adapter.MenuListAdapter
+import com.iremcelikbilek.yemeksepetiapp.data.entity.common.Menu
 import com.iremcelikbilek.yemeksepetiapp.databinding.FragmentMenuListBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -38,6 +40,14 @@ class MenuListFragment : Fragment() {
         binding.restaurantNameTxt.text = args.restaurantData.name
         binding.minimumPriceTxt.text = args.restaurantData.minimumPrice
         binding.estimatedArrivalTimeTxt.text = args.restaurantData.estimatedArrivalTime
+
+        menuListAdapter.addListener(object: IMenuListOnClick{
+            override fun onClick(item: Menu) {
+                val restaurantName = args.restaurantData.name
+                findNavController().navigate(MenuListFragmentDirections.actionMenuListFragmentToMenuDetailFragment(item,restaurantName))
+            }
+
+        })
 
     }
 }
