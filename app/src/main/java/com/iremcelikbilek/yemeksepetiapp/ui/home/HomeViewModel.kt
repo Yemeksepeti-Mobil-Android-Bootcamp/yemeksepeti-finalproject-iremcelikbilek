@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.iremcelikbilek.yemeksepetiapp.data.FoodApiRepository
+import com.iremcelikbilek.yemeksepetiapp.data.entity.category.CategoryResponse
 import com.iremcelikbilek.yemeksepetiapp.data.entity.restaurantList.RestaurantListResponse
 import com.iremcelikbilek.yemeksepetiapp.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,6 +17,8 @@ class HomeViewModel @Inject constructor(
 ) : ViewModel() {
 
     fun getRestaurantList(categoryId: Int? = null): LiveData<Resource<RestaurantListResponse>> = foodApiRepository.getRestaurantList(getCity(), categoryId)
+
+    fun getCategoryList() : LiveData<Resource<CategoryResponse>> = foodApiRepository.getCategoryList()
 
     fun getUser() = foodApiRepository.getUser(getToken())
 

@@ -1,5 +1,6 @@
 package com.iremcelikbilek.yemeksepetiapp.data.remote
 
+import com.iremcelikbilek.yemeksepetiapp.data.entity.category.CategoryResponse
 import com.iremcelikbilek.yemeksepetiapp.data.entity.citylist.CityListResponse
 import com.iremcelikbilek.yemeksepetiapp.data.entity.login.LoginRequest
 import com.iremcelikbilek.yemeksepetiapp.data.entity.login.LoginResponse
@@ -31,4 +32,7 @@ interface FoodApiService {
 
     @POST("search")
     suspend fun getRestaurantListSearchResult(@Body request: SearchRequest) : Response<SearchResponse>
+
+    @GET("categoryList")
+    suspend fun getCategoryList() : Response<CategoryResponse>
 }

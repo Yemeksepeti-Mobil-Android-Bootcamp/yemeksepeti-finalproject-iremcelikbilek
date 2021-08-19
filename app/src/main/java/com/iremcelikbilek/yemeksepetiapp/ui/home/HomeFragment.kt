@@ -13,8 +13,10 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.iremcelikbilek.yemeksepetiapp.HomeActivity
 import com.iremcelikbilek.yemeksepetiapp.R
+import com.iremcelikbilek.yemeksepetiapp.adapter.CategoryListAdapter
 import com.iremcelikbilek.yemeksepetiapp.adapter.HomeRestaurantListAdapter
 import com.iremcelikbilek.yemeksepetiapp.data.entity.citylist.CityData
 import com.iremcelikbilek.yemeksepetiapp.data.entity.restaurantList.RestaurantData
@@ -34,6 +36,7 @@ class HomeFragment: Fragment() {
     private val viewModel: HomeViewModel by viewModels()
 
     private var restaurantListAdapter: HomeRestaurantListAdapter = HomeRestaurantListAdapter()
+    private var categoryListAdapter: CategoryListAdapter = CategoryListAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,9 +50,84 @@ class HomeFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        initRecyclerViews()
+
+        observeUser()
+
+        observeCategoryList()
+
+        observeRestaurantList()
+
+    }
+
+    private fun initRecyclerViews() {
+
         binding.homeRv.layoutManager = LinearLayoutManager(context)
         binding.homeRv.adapter = restaurantListAdapter
 
+        binding.categoryRv.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
+        binding.categoryRv.adapter = categoryListAdapter
+    }
+
+    private fun observeRestaurantList() {
+        viewModel.getRestaurantList().observe(viewLifecycleOwner, Observer {
+            when(it.status) {
+                Resource.Status.LOADING -> {
+
+                }
+
+                Resource.Status.SUCCESS -> {
+                    restaurantListAdapter.setRestaurantList(it.data)
+                    restaurantListAdapter.addListener(object : IRestaurantListItemOnClick {
+                        override fun onClick(item: RestaurantData) {
+                            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToMenuListFragment(item))
+                        }
+                    })
+                }
+
+                Resource.Status.ERROR -> {
+                    val dialog = AlertDialog.Builder(context)
+                        .setTitle("Error")
+                        .setMessage("${it.message}")
+                        .setPositiveButton("ok") { dialog, button ->
+                            dialog.dismiss()
+                        }
+                    dialog.show()
+
+                }
+            }
+        })
+
+    }
+
+    private fun observeCategoryList() {
+        viewModel.getCategoryList().observe(viewLifecycleOwner, Observer {
+            when(it.status) {
+                Resource.Status.LOADING -> {
+
+                }
+
+                Resource.Status.SUCCESS -> {
+                    categoryListAdapter.setCategoryList(it.data!!)
+                }
+
+                Resource.Status.ERROR -> {
+                    val dialog = AlertDialog.Builder(context)
+                        .setTitle("Error")
+                        .setMessage("${it.message}")
+                        .setPositiveButton("ok") { dialog, button ->
+                            dialog.dismiss()
+                        }
+                    dialog.show()
+
+                }
+            }
+
+        })
+
+    }
+
+    private fun observeUser() {
         viewModel.getUser().observe(viewLifecycleOwner, Observer {
             when(it.status) {
                 Resource.Status.LOADING -> {
@@ -78,34 +156,6 @@ class HomeFragment: Fragment() {
                 }
             }
 
-        })
-
-        viewModel.getRestaurantList().observe(viewLifecycleOwner, Observer {
-            when(it.status) {
-                Resource.Status.LOADING -> {
-
-                }
-
-                Resource.Status.SUCCESS -> {
-                    restaurantListAdapter.setRestaurantList(it.data)
-                    restaurantListAdapter.addListener(object : IRestaurantListItemOnClick {
-                        override fun onClick(item: RestaurantData) {
-                            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToMenuListFragment(item))
-                        }
-                    })
-                }
-
-                Resource.Status.ERROR -> {
-                    val dialog = AlertDialog.Builder(context)
-                        .setTitle("Error")
-                        .setMessage("${it.message}")
-                        .setPositiveButton("ok") { dialog, button ->
-                            dialog.dismiss()
-                        }
-                    dialog.show()
-
-                }
-            }
         })
     }
 

@@ -53,4 +53,6 @@ class FoodApiRepository @Inject constructor(
     fun getUser(token: String?) = performNetworkOperation { remoteDataSource.getUser(token) }
 
     fun getRestaurantListSearchResult(searchRequest: SearchRequest) = performNetworkOperation { remoteDataSource.getRestaurantListSearchResult(searchRequest) }
+
+    fun getCategoryList() = performNetworkOperation { remoteDataSource.getCategoryList() }
 }
