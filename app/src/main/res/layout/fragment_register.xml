@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/primaryColor">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingVertical="30dp"
+        android:paddingHorizontal="60dp">
+
+        <TextView
+            android:layout_gravity="start"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Name"
+            android:textColor="@color/white"
+            android:textSize="23sp"
+            android:fontFamily="@font/montserrat_bold"/>
+
+        <EditText
+            android:id="@+id/name_edt_txt"
+            android:layout_marginBottom="20dp"
+            android:layout_gravity="start"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
+            android:inputType="textEmailAddress"
+            android:hint="enter name"
+            android:textColorHint="@color/white"
+            android:textColor="@color/white"
+            android:fontFamily="@font/montserrat_regular"/>
+
+        <TextView
+            android:layout_gravity="start"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Lastname"
+            android:textColor="@color/white"
+            android:textSize="23sp"
+            android:fontFamily="@font/montserrat_bold"/>
+
+        <EditText
+            android:id="@+id/last_name_edt_txt"
+            android:layout_marginBottom="20dp"
+            android:layout_gravity="start"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
+            android:inputType="textEmailAddress"
+            android:hint="enter lastname"
+            android:textColorHint="@color/white"
+            android:textColor="@color/white"
+            android:fontFamily="@font/montserrat_regular"/>
+
+        <TextView
+            android:layout_gravity="start"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Phone"
+            android:textColor="@color/white"
+            android:textSize="23sp"
+            android:fontFamily="@font/montserrat_bold"/>
+
+        <EditText
+            android:id="@+id/phone_edt_txt"
+            android:layout_marginBottom="20dp"
+            android:layout_gravity="start"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
+            android:inputType="phone"
+            android:hint="enter phone"
+            android:textColorHint="@color/white"
+            android:textColor="@color/white"
+            android:fontFamily="@font/montserrat_regular"/>
+
+        <TextView
+            android:layout_gravity="start"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Email Address"
+            android:textColor="@color/white"
+            android:textSize="23sp"
+            android:fontFamily="@font/montserrat_bold"/>
+
+        <EditText
+            android:id="@+id/mail_edt_txt"
+            android:layout_marginBottom="20dp"
+            android:layout_gravity="start"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
+            android:inputType="textEmailAddress"
+            android:hint="enter email"
+            android:textColorHint="@color/white"
+            android:textColor="@color/white"
+            android:fontFamily="@font/montserrat_regular"/>
+
+        <TextView
+            android:layout_gravity="start"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Password"
+            android:textColor="@color/white"
+            android:textSize="23sp"
+            android:fontFamily="@font/montserrat_bold"/>
+
+        <EditText
+            android:id="@+id/password_edt_txt"
+            android:layout_marginBottom="20dp"
+            android:layout_gravity="start"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
+            android:inputType="textPassword"
+            android:hint="enter password"
+            android:textColorHint="@color/white"
+            android:textColor="@color/white"
+            android:fontFamily="@font/montserrat_regular"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/register_button"
+            android:layout_marginHorizontal="60dp"
+            android:layout_marginBottom="?actionBarSize"
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_login_background"
+            android:text="Sign Up"
+            android:textColor="@color/white"
+            android:textAllCaps="false"/>
+
+    </LinearLayout>
+
+</ScrollView>

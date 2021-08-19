@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/home_graph"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        tools:layout="@layout/fragment_home"
+        android:name="com.iremcelikbilek.yemeksepetiapp.ui.home.HomeFragment"
+        android:label="HomeFragment" >
+        <action
+            android:id="@+id/action_homeFragment_to_menuListFragment"
+            app:destination="@id/menuListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchFragment"
+        tools:layout="@layout/fragment_search"
+        android:name="com.iremcelikbilek.yemeksepetiapp.ui.search.SearchFragment"
+        android:label="SearchFragment" />
+    <fragment
+        android:id="@+id/profileFragment"
+        tools:layout="@layout/fragment_profile"
+        android:name="com.iremcelikbilek.yemeksepetiapp.ui.profile.ProfileFragment"
+        android:label="ProfileFragment" >
+        <action
+            android:id="@+id/action_profileFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        tools:layout="@layout/fragment_settings"
+        android:name="com.iremcelikbilek.yemeksepetiapp.ui.profile.settings.SettingsFragment"
+        android:label="SettingsFragment" />
+    <fragment
+        android:id="@+id/menuListFragment"
+        tools:layout="@layout/fragment_menu_list"
+        android:name="com.iremcelikbilek.yemeksepetiapp.ui.menuList.MenuListFragment"
+        android:label="MenuListFragment" >
+        <argument
+            android:name="restaurantData"
+            app:argType="com.iremcelikbilek.yemeksepetiapp.data.entity.restaurantList.RestaurantData" />
+    </fragment>
+</navigation>
