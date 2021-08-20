@@ -5,9 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.iremcelikbilek.yemeksepetiapp.databinding.FragmentMenuDetailBinding
-import com.iremcelikbilek.yemeksepetiapp.ui.menuList.MenuListFragmentArgs
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -15,21 +15,45 @@ class MenuDetailFragment: Fragment() {
 
     private lateinit var binding: FragmentMenuDetailBinding
     private val args by navArgs<MenuDetailFragmentArgs>()
+    private val viewModel: MenuDetailViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentMenuDetailBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        initViews()
+
+        incrementMenuListener()
+
+        removeMenuListener()
+    }
+
+    private fun initViews() {
         binding.menuDetailNameTxt.text = args.menuItem.name
         binding.menuDetailDescriptionTxt.text = args.menuItem.description
         binding.menuPriceTxt.text = args.menuItem.price
         binding.menuDetailRestaurantName.text = args.restaurantName
+    }
+
+    private fun removeMenuListener() {
+        binding.removeBtn.setOnClickListener {
+            viewModel.removeMenu()
+            binding.menuCountNumberTxt.text = "${viewModel.getCounter()} adet"
+        }
+    }
+
+    private fun incrementMenuListener() {
+        binding.addBtn.setOnClickListener {
+            viewModel.addMenu()
+            binding.menuCountNumberTxt.text = "${viewModel.getCounter()} adet"
+        }
     }
 }
