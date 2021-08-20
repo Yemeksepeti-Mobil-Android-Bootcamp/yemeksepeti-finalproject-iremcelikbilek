@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_homeFragment_to_menuListFragment"
             app:destination="@id/menuListFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_categoryListFragment"
+            app:destination="@id/categoryListFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
@@ -60,5 +63,14 @@
         <argument
             android:name="restaurantName"
             app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/categoryListFragment"
+        tools:layout="@layout/fragment_categori_detail_list"
+        android:name="com.iremcelikbilek.yemeksepetiapp.ui.categoryDetail.CategoryListFragment"
+        android:label="CategoryListFragment" >
+        <argument
+            android:name="categoryData"
+            app:argType="com.iremcelikbilek.yemeksepetiapp.data.entity.category.CategoryData" />
     </fragment>
 </navigation>

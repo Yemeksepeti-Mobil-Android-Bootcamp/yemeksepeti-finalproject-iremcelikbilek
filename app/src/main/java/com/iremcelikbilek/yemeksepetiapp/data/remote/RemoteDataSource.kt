@@ -16,7 +16,7 @@ class RemoteDataSource @Inject constructor(
 
     suspend fun getCityList() = getResult { foodApiService.getCityList() }
 
-    suspend fun getRestaurantList(cityId: Int?, categoryId: Int?) = getResult { foodApiService.getRestaurantList(cityId, categoryId) }
+    suspend fun getRestaurantList(cityId: String?, categoryId: String?) = getResult { foodApiService.getRestaurantList(cityId, categoryId) }
 
     suspend fun getUser(token: String?) = getResult { foodApiService.getUser(token) }
 

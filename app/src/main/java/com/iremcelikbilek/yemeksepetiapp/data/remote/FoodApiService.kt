@@ -25,7 +25,7 @@ interface FoodApiService {
     suspend fun getCityList(): Response<CityListResponse>
 
     @GET("restaurantListing")
-    suspend fun getRestaurantList(@Query("city") cityId: Int?, @Query("category") categoryId: Int?): Response<RestaurantListResponse>
+    suspend fun getRestaurantList(@Query("city") cityId: String?, @Query("category") categoryId: String?): Response<RestaurantListResponse>
 
     @GET("user")
     suspend fun getUser(@Header("token") token: String?) : Response<UserResponse>

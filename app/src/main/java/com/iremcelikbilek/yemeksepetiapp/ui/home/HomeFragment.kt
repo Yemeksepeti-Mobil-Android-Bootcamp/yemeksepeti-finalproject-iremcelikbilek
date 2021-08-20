@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.iremcelikbilek.yemeksepetiapp.adapter.CategoryListAdapter
 import com.iremcelikbilek.yemeksepetiapp.adapter.HomeRestaurantListAdapter
+import com.iremcelikbilek.yemeksepetiapp.data.entity.category.CategoryData
 import com.iremcelikbilek.yemeksepetiapp.data.entity.common.RestaurantData
 import com.iremcelikbilek.yemeksepetiapp.databinding.FragmentHomeBinding
 import com.iremcelikbilek.yemeksepetiapp.utils.Resource
@@ -99,6 +100,11 @@ class HomeFragment: Fragment() {
 
                 Resource.Status.SUCCESS -> {
                     categoryListAdapter.setCategoryList(it.data!!)
+                    categoryListAdapter.addListener(object: ICategoryItemOnClick {
+                        override fun onClick(item: CategoryData) {
+                            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToCategoryListFragment(item))
+                        }
+                    })
                 }
 
                 Resource.Status.ERROR -> {
@@ -121,7 +127,7 @@ class HomeFragment: Fragment() {
         viewModel.getUser().observe(viewLifecycleOwner, Observer {
             when(it.status) {
                 Resource.Status.LOADING -> {
-
+                    binding.userNameTxt.text = ""
                 }
 
                 Resource.Status.SUCCESS -> {

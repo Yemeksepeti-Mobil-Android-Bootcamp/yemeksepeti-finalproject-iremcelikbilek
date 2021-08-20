@@ -48,7 +48,7 @@ class FoodApiRepository @Inject constructor(
         return localeDataSource.getCity()
     }
 
-    fun getRestaurantList(cityId: Int?, categoryId: Int?) = performNetworkOperation { remoteDataSource.getRestaurantList(cityId, categoryId) }
+    fun getRestaurantList(cityId: String?, categoryId: String?) = performNetworkOperation { remoteDataSource.getRestaurantList(cityId, categoryId) }
 
     fun getUser(token: String?) = performNetworkOperation { remoteDataSource.getUser(token) }
 
