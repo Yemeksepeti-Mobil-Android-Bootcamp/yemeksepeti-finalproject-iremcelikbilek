@@ -11,6 +11,11 @@
         android:contentDescription="Search"
         android:icon="@drawable/ic_baseline_search_24"/>
 
+    <item android:id="@+id/cartFragment"
+        android:title="Cart"
+        android:contentDescription="Cart"
+        android:icon="@drawable/ic_baseline_shopping_cart_24"/>
+
     <item android:id="@+id/profileFragment"
         android:title="Profile"
         android:contentDescription="Profile"

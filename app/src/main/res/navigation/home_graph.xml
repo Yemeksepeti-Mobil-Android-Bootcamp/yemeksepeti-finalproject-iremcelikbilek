@@ -76,4 +76,9 @@
             android:id="@+id/action_categoryListFragment_to_menuListFragment"
             app:destination="@id/menuListFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/cartFragment"
+        tools:layout="@layout/fragment_cart"
+        android:name="com.iremcelikbilek.yemeksepetiapp.ui.cart.CartFragment"
+        android:label="CartFragment" />
 </navigation>

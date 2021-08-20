@@ -35,4 +35,5 @@ interface FoodApiService {
 
     @GET("categoryList")
     suspend fun getCategoryList() : Response<CategoryResponse>
+
 }
