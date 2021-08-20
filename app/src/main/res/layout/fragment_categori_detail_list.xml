@@ -28,10 +28,11 @@
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Aradığınız kategoride bir restoran bulunmamaktadır."
+        android:text="Şehrinizde \n aradığınız kategoride bir restoran bulunmamaktadır."
         android:textSize="20sp"
         android:textColor="@color/white"
-        android:fontFamily="@font/montserrat_bold"/>
+        android:fontFamily="@font/montserrat_bold"
+        android:visibility="gone"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/category_rv"

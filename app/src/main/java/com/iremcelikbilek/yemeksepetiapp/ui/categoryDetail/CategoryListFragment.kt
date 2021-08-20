@@ -59,12 +59,16 @@ class CategoryListFragment: Fragment() {
 
                 Resource.Status.SUCCESS -> {
                     if(it.data?.data == null) {
-                        Log.v("Category", "if data ${it?.data}")
                         binding.noResultTxt.show()
                     }else {
-                        Log.v("Category", "else data ${it?.data}")
                         binding.noResultTxt.gone()
                         adapter.setRestaurantList(it.data)
+                        adapter.addListener(object : IRestaurantListItemOnClick {
+                            override fun onClick(item: RestaurantData) {
+                                findNavController().navigate(CategoryListFragmentDirections.actionCategoryListFragmentToMenuListFragment(item))
+                            }
+
+                        })
                     }
                 }
 

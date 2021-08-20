@@ -72,5 +72,8 @@
         <argument
             android:name="categoryData"
             app:argType="com.iremcelikbilek.yemeksepetiapp.data.entity.category.CategoryData" />
+        <action
+            android:id="@+id/action_categoryListFragment_to_menuListFragment"
+            app:destination="@id/menuListFragment" />
     </fragment>
 </navigation>
