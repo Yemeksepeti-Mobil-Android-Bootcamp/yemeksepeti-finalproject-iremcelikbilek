@@ -3,7 +3,7 @@ package com.iremcelikbilek.yemeksepetiapp.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.iremcelikbilek.yemeksepetiapp.data.entity.search.SearchData
+import com.iremcelikbilek.yemeksepetiapp.data.entity.common.RestaurantData
 import com.iremcelikbilek.yemeksepetiapp.data.entity.search.SearchResponse
 import com.iremcelikbilek.yemeksepetiapp.databinding.ItemHomeRestaurantListBinding
 import com.iremcelikbilek.yemeksepetiapp.ui.search.ISearchListOnClick
@@ -27,7 +27,7 @@ class SearchRestaurantListAdapter: RecyclerView.Adapter<SearchRestaurantListAdap
     }
 
     class SearchRestaurantListViewHolder(var binding: ItemHomeRestaurantListBinding): RecyclerView.ViewHolder(binding.root) {
-        fun setItem(item: SearchData, listener: ISearchListOnClick?) {
+        fun setItem(item: RestaurantData, listener: ISearchListOnClick?) {
             binding.restaurantNameTxt.text = item.name
             binding.minimumPriceTxt.text = item.minimumPrice
             binding.estimatedArrivalTimeTxt.text = item.estimatedArrivalTime

@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.iremcelikbilek.yemeksepetiapp.data.entity.common.Menu
-import com.iremcelikbilek.yemeksepetiapp.data.entity.restaurantList.RestaurantData
+import com.iremcelikbilek.yemeksepetiapp.data.entity.common.RestaurantData
 import com.iremcelikbilek.yemeksepetiapp.databinding.ItemMenuListBinding
 import com.iremcelikbilek.yemeksepetiapp.ui.menuList.IMenuListOnClick
 

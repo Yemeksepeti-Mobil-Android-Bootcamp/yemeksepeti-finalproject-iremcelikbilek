@@ -1,8 +1,7 @@
-package com.iremcelikbilek.yemeksepetiapp.data.entity.restaurantList
+package com.iremcelikbilek.yemeksepetiapp.data.entity.common
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
-import com.iremcelikbilek.yemeksepetiapp.data.entity.common.Menu
 import kotlinx.parcelize.Parcelize
 
 @Parcelize

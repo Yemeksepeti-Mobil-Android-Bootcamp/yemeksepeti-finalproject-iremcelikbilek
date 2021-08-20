@@ -3,7 +3,6 @@ package com.iremcelikbilek.yemeksepetiapp.ui.search
 import android.app.AlertDialog
 import android.os.Bundle
 import android.view.*
-import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
@@ -12,9 +11,8 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.iremcelikbilek.yemeksepetiapp.R
-import com.iremcelikbilek.yemeksepetiapp.adapter.HomeRestaurantListAdapter
 import com.iremcelikbilek.yemeksepetiapp.adapter.SearchRestaurantListAdapter
-import com.iremcelikbilek.yemeksepetiapp.data.entity.search.SearchData
+import com.iremcelikbilek.yemeksepetiapp.data.entity.common.RestaurantData
 import com.iremcelikbilek.yemeksepetiapp.databinding.FragmentSearchBinding
 import com.iremcelikbilek.yemeksepetiapp.utils.Resource
 import dagger.hilt.android.AndroidEntryPoint
@@ -41,10 +39,7 @@ class SearchFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.searchRestaurantListRv.layoutManager = LinearLayoutManager(context)
         binding.searchRestaurantListRv.adapter = adapter
-
     }
-
-
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
@@ -60,40 +55,46 @@ class SearchFragment: Fragment() {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                viewModel.getRestaurantListSearchResult(newText).observe(viewLifecycleOwner, Observer {
-                    when(it.status) {
-                        Resource.Status.LOADING -> {
-
-                        }
-
-                        Resource.Status.SUCCESS -> {
-                           adapter.setSearchList(it.data)
-                            adapter.addListener(object: ISearchListOnClick{
-                                override fun onClick(item: SearchData) {
-
-                                }
-                            })
-                        }
-
-                        Resource.Status.ERROR -> {
-                            val dialog = AlertDialog.Builder(context)
-                                .setTitle("Error")
-                                .setMessage("${it.message}")
-                                .setPositiveButton("ok") { dialog, button ->
-                                    dialog.dismiss()
-                                }
-                            dialog.show()
-
-                        }
-                    }
-                })
-
+                observeSearchResult(newText)
                 return true
-
             }
-
         })
 
+    }
+
+    private fun observeSearchResult(newText: String?) {
+        viewModel.getRestaurantListSearchResult(newText).observe(this, Observer {
+            when(it.status) {
+                Resource.Status.LOADING -> {
+
+                }
+
+                Resource.Status.SUCCESS -> {
+                    adapter.setSearchList(it.data)
+                    adapter.addListener(object: ISearchListOnClick{
+                        override fun onClick(item: RestaurantData) {
+                            findNavController().navigate(SearchFragmentDirections.actionSearchFragmentToMenuListFragment(item))
+                        }
+                    })
+                }
+
+                Resource.Status.ERROR -> {
+                    val dialog = AlertDialog.Builder(context)
+                        .setTitle("Error")
+                        .setMessage("${it.message}")
+                        .setPositiveButton("ok") { dialog, button ->
+                            dialog.dismiss()
+                        }
+                    dialog.show()
+
+                }
+            }
+        })
+    }
+
+    override fun onPause() {
+        super.onPause()
+        adapter.removeListener()
     }
 
 }

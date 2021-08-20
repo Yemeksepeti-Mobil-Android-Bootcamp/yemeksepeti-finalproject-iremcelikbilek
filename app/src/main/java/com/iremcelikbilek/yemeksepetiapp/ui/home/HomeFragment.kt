@@ -1,32 +1,22 @@
 package com.iremcelikbilek.yemeksepetiapp.ui.home
 
 import android.app.AlertDialog
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.iremcelikbilek.yemeksepetiapp.HomeActivity
-import com.iremcelikbilek.yemeksepetiapp.R
 import com.iremcelikbilek.yemeksepetiapp.adapter.CategoryListAdapter
 import com.iremcelikbilek.yemeksepetiapp.adapter.HomeRestaurantListAdapter
-import com.iremcelikbilek.yemeksepetiapp.data.entity.citylist.CityData
-import com.iremcelikbilek.yemeksepetiapp.data.entity.restaurantList.RestaurantData
-import com.iremcelikbilek.yemeksepetiapp.databinding.ActivityMainBinding
+import com.iremcelikbilek.yemeksepetiapp.data.entity.common.RestaurantData
 import com.iremcelikbilek.yemeksepetiapp.databinding.FragmentHomeBinding
-import com.iremcelikbilek.yemeksepetiapp.ui.citylist.ICityListItemOnClick
 import com.iremcelikbilek.yemeksepetiapp.utils.Resource
-import com.iremcelikbilek.yemeksepetiapp.utils.show
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class HomeFragment: Fragment() {
