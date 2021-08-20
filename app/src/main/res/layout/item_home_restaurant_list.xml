@@ -25,20 +25,15 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <androidx.cardview.widget.CardView
+            <com.google.android.material.imageview.ShapeableImageView
                 android:layout_marginEnd="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="50dp"
-                android:backgroundTint="@color/primaryColor">
-                <ImageView
-                    android:padding="10dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/white"
-                    android:src="@drawable/app_logo"/>
+                android:id="@+id/restaurant_img"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:textColor="@color/white"
+                android:scaleType="centerCrop"
+                app:shapeAppearanceOverlay="@style/roundedCornersImageView"/>
 
-            </androidx.cardview.widget.CardView>
 
             <TextView
                 android:id="@+id/restaurant_name_txt"

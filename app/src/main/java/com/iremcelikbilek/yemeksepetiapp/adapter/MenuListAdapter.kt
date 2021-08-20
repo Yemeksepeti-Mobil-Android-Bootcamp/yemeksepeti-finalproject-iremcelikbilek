@@ -3,6 +3,7 @@ package com.iremcelikbilek.yemeksepetiapp.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.iremcelikbilek.yemeksepetiapp.data.entity.common.Menu
 import com.iremcelikbilek.yemeksepetiapp.data.entity.common.RestaurantData
 import com.iremcelikbilek.yemeksepetiapp.databinding.ItemMenuListBinding
@@ -28,6 +29,7 @@ class MenuListAdapter: RecyclerView.Adapter<MenuListAdapter.MenuListViewHolder>(
 
     class MenuListViewHolder(var binding: ItemMenuListBinding): RecyclerView.ViewHolder(binding.root) {
         fun setItem(item: Menu, listener: IMenuListOnClick?) {
+            Glide.with(binding.root.context).load(item.imageUrl).into(binding.menuImg)
             binding.menuNameTxt.text = item.name
             binding.menuDescriptionTxt.text = item.description
             binding.menuItemPrice.text = item.price

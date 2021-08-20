@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
+import com.bumptech.glide.Glide
 import com.iremcelikbilek.yemeksepetiapp.databinding.FragmentMenuDetailBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -29,18 +30,19 @@ class MenuDetailFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initViews()
+        initViews(view)
 
         incrementMenuListener()
 
         removeMenuListener()
     }
 
-    private fun initViews() {
+    private fun initViews(view: View) {
         binding.menuDetailNameTxt.text = args.menuItem.name
         binding.menuDetailDescriptionTxt.text = args.menuItem.description
         binding.menuPriceTxt.text = args.menuItem.price
         binding.menuDetailRestaurantName.text = args.restaurantName
+        Glide.with(view).load(args.menuItem.imageUrl).into(binding.menuDetailImg)
     }
 
     private fun removeMenuListener() {

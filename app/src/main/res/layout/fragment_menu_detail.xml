@@ -8,9 +8,9 @@
     <ImageView
         android:id="@+id/menu_detail_img"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="400dp"
         android:src="@drawable/menu_detail_img"
-        android:scaleType="fitStart"/>
+        android:scaleType="centerCrop"/>
 
     <LinearLayout
         android:layout_gravity="bottom"
