@@ -1,14 +1,18 @@
 package com.iremcelikbilek.yemeksepetiapp.ui.menuDetail
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.iremcelikbilek.yemeksepetiapp.databinding.FragmentMenuDetailBinding
+import com.iremcelikbilek.yemeksepetiapp.utils.Resource
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -35,7 +39,10 @@ class MenuDetailFragment: Fragment() {
         incrementMenuListener()
 
         removeMenuListener()
+
+        addCartBtnListener()
     }
+
 
     private fun initViews(view: View) {
         binding.menuDetailNameTxt.text = args.menuItem.name
@@ -49,6 +56,7 @@ class MenuDetailFragment: Fragment() {
         binding.removeBtn.setOnClickListener {
             viewModel.removeMenu()
             binding.menuCountNumberTxt.text = "${viewModel.getCounter()} adet"
+            binding.menuPriceTxt.text = viewModel.calculatePrice(args.menuItem.price)
         }
     }
 
@@ -56,6 +64,35 @@ class MenuDetailFragment: Fragment() {
         binding.addBtn.setOnClickListener {
             viewModel.addMenu()
             binding.menuCountNumberTxt.text = "${viewModel.getCounter()} adet"
+            binding.menuPriceTxt.text = viewModel.calculatePrice(args.menuItem.price)
         }
+    }
+
+    private fun addCartBtnListener() {
+        binding.addCartBtn.setOnClickListener {
+            viewModel.addCartData(args.restaurantId, args.menuItem.id).observe(viewLifecycleOwner, Observer {
+                when(it.status) {
+                    Resource.Status.LOADING -> {
+
+                    }
+
+                    Resource.Status.SUCCESS -> {
+                       findNavController().navigate(MenuDetailFragmentDirections.actionMenuDetailFragmentToCartFragment())
+                    }
+
+                    Resource.Status.ERROR -> {
+                        val dialog = AlertDialog.Builder(context)
+                            .setTitle("Error")
+                            .setMessage("${it.message}")
+                            .setPositiveButton("ok") { dialog, button ->
+                                dialog.dismiss()
+                            }
+                        dialog.show()
+
+                    }
+                }
+            })
+        }
+
     }
 }

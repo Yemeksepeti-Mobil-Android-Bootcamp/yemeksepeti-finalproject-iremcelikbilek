@@ -55,4 +55,12 @@ class FoodApiRepository @Inject constructor(
     fun getRestaurantListSearchResult(searchRequest: SearchRequest) = performNetworkOperation { remoteDataSource.getRestaurantListSearchResult(searchRequest) }
 
     fun getCategoryList() = performNetworkOperation { remoteDataSource.getCategoryList() }
+
+    fun getCartList(token: String?) = performNetworkOperation { remoteDataSource.getCartList(token) }
+
+    fun addCartData(token: String?, restaurantId: String?, menuId: String?, count: Int?) = performNetworkOperation { remoteDataSource.addCartData(token, restaurantId, menuId, count) }
+
+    fun removeToCart(token: String?, restaurantId: String?, menuId: String?) = performNetworkOperation { remoteDataSource.removeToCart(token, restaurantId, menuId) }
+
+    fun completeOrder(token: String?) = performNetworkOperation { remoteDataSource.completeOrder(token) }
 }

@@ -63,6 +63,12 @@
         <argument
             android:name="restaurantName"
             app:argType="string" />
+        <argument
+            android:name="restaurantId"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_menuDetailFragment_to_cartFragment"
+            app:destination="@id/cartFragment" />
     </fragment>
     <fragment
         android:id="@+id/categoryListFragment"
@@ -81,4 +87,5 @@
         tools:layout="@layout/fragment_cart"
         android:name="com.iremcelikbilek.yemeksepetiapp.ui.cart.CartFragment"
         android:label="CartFragment" />
+
 </navigation>

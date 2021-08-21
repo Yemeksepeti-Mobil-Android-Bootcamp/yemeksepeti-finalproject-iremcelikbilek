@@ -23,4 +23,12 @@ class RemoteDataSource @Inject constructor(
     suspend fun getRestaurantListSearchResult(request: SearchRequest) = getResult { foodApiService.getRestaurantListSearchResult(request) }
 
     suspend fun getCategoryList() = getResult { foodApiService.getCategoryList() }
+
+    suspend fun getCartList(token: String?) = getResult { foodApiService.getCartList(token) }
+
+    suspend fun addCartData(token: String?, restaurantId: String?, menuId: String?, count: Int?) = getResult { foodApiService.addCartData(token, restaurantId, menuId, count) }
+
+    suspend fun removeToCart(token: String?, restaurantId: String?, menuId: String?) = getResult { foodApiService.removeToCart(token, restaurantId, menuId) }
+
+    suspend fun completeOrder(token: String?) = getResult { foodApiService.completeOrder(token) }
 }

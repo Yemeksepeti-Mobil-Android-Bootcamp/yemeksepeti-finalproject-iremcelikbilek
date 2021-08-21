@@ -46,7 +46,8 @@ class MenuListFragment : Fragment() {
         menuListAdapter.addListener(object: IMenuListOnClick{
             override fun onClick(item: Menu) {
                 val restaurantName = args.restaurantData.name
-                findNavController().navigate(MenuListFragmentDirections.actionMenuListFragmentToMenuDetailFragment(item,restaurantName))
+                val restaurantId = args.restaurantData.id
+                findNavController().navigate(MenuListFragmentDirections.actionMenuListFragmentToMenuDetailFragment(item,restaurantName,restaurantId))
             }
 
         })

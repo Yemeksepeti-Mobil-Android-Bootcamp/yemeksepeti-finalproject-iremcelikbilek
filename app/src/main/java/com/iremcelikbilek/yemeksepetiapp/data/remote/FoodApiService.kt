@@ -1,5 +1,9 @@
 package com.iremcelikbilek.yemeksepetiapp.data.remote
 
+import com.iremcelikbilek.yemeksepetiapp.data.entity.cart.CartListResponse
+import com.iremcelikbilek.yemeksepetiapp.data.entity.cart.addCart.AddCartResponse
+import com.iremcelikbilek.yemeksepetiapp.data.entity.cart.completeOrder.CompleteOrderResponse
+import com.iremcelikbilek.yemeksepetiapp.data.entity.cart.removeCart.RemoveCartResponse
 import com.iremcelikbilek.yemeksepetiapp.data.entity.category.CategoryResponse
 import com.iremcelikbilek.yemeksepetiapp.data.entity.citylist.CityListResponse
 import com.iremcelikbilek.yemeksepetiapp.data.entity.login.LoginRequest
@@ -35,5 +39,26 @@ interface FoodApiService {
 
     @GET("categoryList")
     suspend fun getCategoryList() : Response<CategoryResponse>
+
+    @GET("basket")
+    suspend fun getCartList(@Header("token") token: String?) : Response<CartListResponse>
+
+    @GET("addToBasket")
+    suspend fun addCartData(
+        @Header("token") token: String?,
+        @Query("restaurant") restaurantId: String?,
+        @Query("menu") menuId: String?,
+        @Query("count") count: Int?
+    ): Response<AddCartResponse>
+
+    @GET("removeToCart")
+    suspend fun removeToCart(
+        @Header("token") token: String?,
+        @Query("restaurant") restaurantId: String?,
+        @Query("menu") menuId: String?
+    ): Response<RemoveCartResponse>
+
+    @GET("checkout")
+    suspend fun completeOrder(@Header("token") token: String?) : Response<CompleteOrderResponse>
 
 }
