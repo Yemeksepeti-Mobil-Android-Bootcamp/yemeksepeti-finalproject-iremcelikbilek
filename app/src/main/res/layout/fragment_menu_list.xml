@@ -30,13 +30,15 @@
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.cardview.widget.CardView
+        android:layout_marginHorizontal="5dp"
         android:id="@+id/restaurant_list_item_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginVertical="5dp"
         android:paddingVertical="10dp"
         android:paddingHorizontal="20dp"
-        android:elevation="30dp">
+        android:elevation="30dp"
+        app:cardCornerRadius="20dp">
 
         <LinearLayout
             android:layout_width="match_parent"

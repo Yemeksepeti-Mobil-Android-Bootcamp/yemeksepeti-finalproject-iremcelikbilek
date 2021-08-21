@@ -17,6 +17,8 @@ import com.iremcelikbilek.yemeksepetiapp.data.entity.category.CategoryData
 import com.iremcelikbilek.yemeksepetiapp.data.entity.common.RestaurantData
 import com.iremcelikbilek.yemeksepetiapp.databinding.FragmentHomeBinding
 import com.iremcelikbilek.yemeksepetiapp.utils.Resource
+import com.iremcelikbilek.yemeksepetiapp.utils.gone
+import com.iremcelikbilek.yemeksepetiapp.utils.show
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -64,10 +66,12 @@ class HomeFragment: Fragment() {
         viewModel.getRestaurantList().observe(viewLifecycleOwner, Observer {
             when(it.status) {
                 Resource.Status.LOADING -> {
-
+                    showLoading()
                 }
 
                 Resource.Status.SUCCESS -> {
+                    hideLoading()
+
                     restaurantListAdapter.setRestaurantList(it.data)
                     restaurantListAdapter.addListener(object : IRestaurantListItemOnClick {
                         override fun onClick(item: RestaurantData) {
@@ -95,10 +99,11 @@ class HomeFragment: Fragment() {
         viewModel.getCategoryList().observe(viewLifecycleOwner, Observer {
             when(it.status) {
                 Resource.Status.LOADING -> {
-
+                    showLoading()
                 }
 
                 Resource.Status.SUCCESS -> {
+                    hideLoading()
                     categoryListAdapter.setCategoryList(it.data!!)
                     categoryListAdapter.addListener(object: ICategoryItemOnClick {
                         override fun onClick(item: CategoryData) {
@@ -128,9 +133,12 @@ class HomeFragment: Fragment() {
             when(it.status) {
                 Resource.Status.LOADING -> {
                     binding.userNameTxt.text = ""
+                    showLoading()
                 }
 
                 Resource.Status.SUCCESS -> {
+                    hideLoading()
+
                     it.data?.data.let { userData ->
                         if(userData != null) {
                             binding.userNameTxt.text = "Hoşgeldin " + userData.personName + " " + userData.personLastName
@@ -153,6 +161,16 @@ class HomeFragment: Fragment() {
             }
 
         })
+    }
+
+    private fun showLoading() {
+        binding.loadingLayout.show()
+        binding.homeLayout.gone()
+    }
+
+    private fun hideLoading() {
+        binding.loadingLayout.gone()
+        binding.homeLayout.show()
     }
 
     override fun onPause() {

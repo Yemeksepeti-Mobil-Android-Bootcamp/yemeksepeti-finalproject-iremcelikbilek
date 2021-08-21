@@ -30,7 +30,7 @@ class HomeRestaurantListAdapter: RecyclerView.Adapter<HomeRestaurantListAdapter.
 
     class HomeRestaurantListViewHolder(var binding: ItemHomeRestaurantListBinding): RecyclerView.ViewHolder(binding.root) {
         fun setItem(item: RestaurantData, listener: IRestaurantListItemOnClick?) {
-            Glide.with(binding.root.context).load(item.imageUrl).placeholder(R.drawable.not_found).into(binding.restaurantImg)
+            Glide.with(binding.root.context).load(item.imageUrl).placeholder(R.drawable.loading).error(R.drawable.not_found).into(binding.restaurantImg)
             binding.restaurantNameTxt.text = item.name
             binding.minimumPriceTxt.text = item.minimumPrice
             binding.estimatedArrivalTimeTxt.text = item.estimatedArrivalTime

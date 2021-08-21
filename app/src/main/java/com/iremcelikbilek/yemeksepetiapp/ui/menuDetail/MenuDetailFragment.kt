@@ -50,7 +50,7 @@ class MenuDetailFragment: Fragment() {
         binding.menuDetailDescriptionTxt.text = args.menuItem.description
         binding.menuPriceTxt.text = args.menuItem.price
         binding.menuDetailRestaurantName.text = args.restaurantName
-        Glide.with(view).load(args.menuItem.imageUrl).placeholder(R.drawable.not_found).into(binding.menuDetailImg)
+        Glide.with(view).load(args.menuItem.imageUrl).placeholder(R.drawable.loading).error(R.drawable.not_found).into(binding.menuDetailImg)
     }
 
     private fun removeMenuListener() {

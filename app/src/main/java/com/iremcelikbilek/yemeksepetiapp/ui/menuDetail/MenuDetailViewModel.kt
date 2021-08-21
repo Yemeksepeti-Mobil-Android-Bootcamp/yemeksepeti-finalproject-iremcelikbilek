@@ -36,6 +36,6 @@ class MenuDetailViewModel @Inject constructor(
 
     fun calculatePrice(price: String?) : String? {
         val totalPrice = price?.substringBefore("TL")?.toDouble()
-        return (totalPrice!! * foodCounter).toString()
+        return String.format("%.2f", (totalPrice!! * foodCounter))
     }
 }

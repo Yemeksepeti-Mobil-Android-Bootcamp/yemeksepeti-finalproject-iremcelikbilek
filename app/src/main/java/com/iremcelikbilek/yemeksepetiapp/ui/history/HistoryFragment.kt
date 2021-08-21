@@ -17,6 +17,8 @@ import com.iremcelikbilek.yemeksepetiapp.databinding.FragmentHistoryBinding
 import com.iremcelikbilek.yemeksepetiapp.ui.home.HomeFragmentDirections
 import com.iremcelikbilek.yemeksepetiapp.ui.home.ICategoryItemOnClick
 import com.iremcelikbilek.yemeksepetiapp.utils.Resource
+import com.iremcelikbilek.yemeksepetiapp.utils.gone
+import com.iremcelikbilek.yemeksepetiapp.utils.show
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -47,10 +49,11 @@ class HistoryFragment: Fragment() {
         viewModel.getHistoryOrderList().observe(viewLifecycleOwner, Observer {
             when(it.status) {
                 Resource.Status.LOADING -> {
-
+                    showLoading()
                 }
 
                 Resource.Status.SUCCESS -> {
+                    hideLoading()
                     historyAdapter.setHistoryList(it.data)
                 }
 
@@ -71,5 +74,15 @@ class HistoryFragment: Fragment() {
     private fun initViews() {
         binding.historyRv.layoutManager = LinearLayoutManager(context)
         binding.historyRv.adapter = historyAdapter
+    }
+
+    private fun showLoading() {
+        binding.loadingLayout.show()
+        binding.historyRv.gone()
+    }
+
+    private fun hideLoading() {
+        binding.loadingLayout.gone()
+        binding.historyRv.show()
     }
 }

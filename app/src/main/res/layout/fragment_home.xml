@@ -2,7 +2,6 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -28,58 +27,84 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="15dp"
-                android:text="Misafir Kullanıcı"
                 android:textColor="@color/white"
                 android:fontFamily="@font/montserrat_medium"/>
         </RelativeLayout>
 
     </androidx.appcompat.widget.Toolbar>
 
-    <androidx.core.widget.NestedScrollView
+    <FrameLayout
+        android:id="@+id/loading_layout"
+        android:visibility="gone"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
-        <LinearLayout
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/imageSlideIcon"
+            android:layout_gravity="center"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="100dp"
+            app:lottie_speed="3"
+            app:layout_constraintTop_toTopOf="parent"
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="food.json"
+            app:lottie_loop="true" />
 
-            <TextView
-                android:text="Kategoriler"
-                android:layout_marginHorizontal="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/montserrat_medium"
-                android:textSize="20sp"
-                android:textColor="@color/white"/>
+    </FrameLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/category_rv"
+    <LinearLayout
+        android:id="@+id/home_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="15dp"
-                android:layout_marginVertical="15dp" />
+                android:orientation="vertical">
 
-            <TextView
-                android:text="Şehrindeki Restoranlar"
-                android:layout_marginHorizontal="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/montserrat_medium"
-                android:textSize="20sp"
-                android:textColor="@color/white"/>
+                <TextView
+                    android:text="Kategoriler"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat_medium"
+                    android:textSize="20sp"
+                    android:textColor="@color/white"/>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/home_rv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="15dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="?actionBarSize"/>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/category_rv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginVertical="15dp" />
 
-        </LinearLayout>
+                <TextView
+                    android:text="Şehrindeki Restoranlar"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat_medium"
+                    android:textSize="20sp"
+                    android:textColor="@color/white"/>
 
-    </androidx.core.widget.NestedScrollView>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/home_rv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="?actionBarSize"/>
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </LinearLayout>
 
 
 

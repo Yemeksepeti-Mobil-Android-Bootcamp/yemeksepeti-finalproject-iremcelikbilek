@@ -3,6 +3,8 @@ package com.iremcelikbilek.yemeksepetiapp.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.iremcelikbilek.yemeksepetiapp.R
 import com.iremcelikbilek.yemeksepetiapp.data.entity.common.RestaurantData
 import com.iremcelikbilek.yemeksepetiapp.data.entity.search.SearchResponse
 import com.iremcelikbilek.yemeksepetiapp.databinding.ItemHomeRestaurantListBinding
@@ -28,6 +30,7 @@ class SearchRestaurantListAdapter: RecyclerView.Adapter<SearchRestaurantListAdap
 
     class SearchRestaurantListViewHolder(var binding: ItemHomeRestaurantListBinding): RecyclerView.ViewHolder(binding.root) {
         fun setItem(item: RestaurantData, listener: ISearchListOnClick?) {
+            Glide.with(binding.root.context).load(item.imageUrl).placeholder(R.drawable.loading).error(R.drawable.not_found).into(binding.restaurantImg)
             binding.restaurantNameTxt.text = item.name
             binding.minimumPriceTxt.text = item.minimumPrice
             binding.estimatedArrivalTimeTxt.text = item.estimatedArrivalTime

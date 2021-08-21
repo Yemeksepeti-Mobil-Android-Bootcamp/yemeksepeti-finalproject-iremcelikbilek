@@ -13,4 +13,6 @@
     <color name="darkGrey">#2B2B2B</color>
     <color name="transparent">#00ffffff</color>
     <color name="green">#4AA96C</color>
+    <color name="transparent_black">#80000000</color>
+    <color name="transparent_white">#90ffffff</color>
 </resources>

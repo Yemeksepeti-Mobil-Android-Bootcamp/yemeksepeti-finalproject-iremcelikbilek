@@ -15,6 +15,8 @@ import com.iremcelikbilek.yemeksepetiapp.adapter.SearchRestaurantListAdapter
 import com.iremcelikbilek.yemeksepetiapp.data.entity.common.RestaurantData
 import com.iremcelikbilek.yemeksepetiapp.databinding.FragmentSearchBinding
 import com.iremcelikbilek.yemeksepetiapp.utils.Resource
+import com.iremcelikbilek.yemeksepetiapp.utils.gone
+import com.iremcelikbilek.yemeksepetiapp.utils.show
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -67,10 +69,12 @@ class SearchFragment: Fragment() {
         viewModel.getRestaurantListSearchResult(newText).observe(this, Observer {
             when(it.status) {
                 Resource.Status.LOADING -> {
-
+                    showLoading()
                 }
 
                 Resource.Status.SUCCESS -> {
+                    hideLoading()
+
                     adapter.setSearchList(it.data)
                     adapter.addListener(object: ISearchListOnClick{
                         override fun onClick(item: RestaurantData) {
@@ -91,6 +95,16 @@ class SearchFragment: Fragment() {
                 }
             }
         })
+    }
+
+    private fun showLoading() {
+        binding.loadingLayout.show()
+        binding.searchRestaurantListRv.gone()
+    }
+
+    private fun hideLoading() {
+        binding.loadingLayout.gone()
+        binding.searchRestaurantListRv.show()
     }
 
     override fun onPause() {

@@ -10,14 +10,26 @@
     app:cardCornerRadius="10dp"
     android:elevation="20dp">
 
-    <TextView
-        android:id="@+id/category_name_txt"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/montserrat_bold"
-        android:textSize="20sp"
-        android:textColor="@color/black"/>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/category_img"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <TextView
+            android:padding="2dp"
+            android:background="@drawable/category_item_background"
+            android:id="@+id/category_name_txt"
+            android:layout_gravity="bottom"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat_medium"
+            android:textSize="15sp"
+            android:textColor="@color/primaryColor"/>
+    </FrameLayout>
 
 </androidx.cardview.widget.CardView>

@@ -12,6 +12,8 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
+import com.iremcelikbilek.yemeksepetiapp.R
 import com.iremcelikbilek.yemeksepetiapp.adapter.HomeRestaurantListAdapter
 import com.iremcelikbilek.yemeksepetiapp.data.entity.common.RestaurantData
 import com.iremcelikbilek.yemeksepetiapp.databinding.FragmentCategoriDetailListBinding
@@ -45,7 +47,7 @@ class CategoryListFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initViews()
+        initViews(view)
 
         observeRestaurantListByCategoryId(args.categoryData.id)
     }
@@ -54,10 +56,13 @@ class CategoryListFragment: Fragment() {
         viewModel.getRestaurantList(categoryId).observe(viewLifecycleOwner, Observer {
             when(it.status) {
                 Resource.Status.LOADING -> {
-
+                    showLoading()
                 }
 
                 Resource.Status.SUCCESS -> {
+
+                    hideLoading()
+
                     if(it.data?.data == null) {
                         binding.noResultTxt.show()
                     }else {
@@ -67,7 +72,6 @@ class CategoryListFragment: Fragment() {
                             override fun onClick(item: RestaurantData) {
                                 findNavController().navigate(CategoryListFragmentDirections.actionCategoryListFragmentToMenuListFragment(item))
                             }
-
                         })
                     }
                 }
@@ -87,9 +91,19 @@ class CategoryListFragment: Fragment() {
 
     }
 
-    private fun initViews() {
+    private fun initViews(view: View) {
         binding.categoryNameTxt.text = args.categoryData.name
         binding.categoryRv.layoutManager = LinearLayoutManager(context)
         binding.categoryRv.adapter = adapter
+    }
+
+    private fun showLoading() {
+        binding.loadingLayout.show()
+        binding.categoryRv.gone()
+    }
+
+    private fun hideLoading() {
+        binding.loadingLayout.gone()
+        binding.categoryRv.show()
     }
 }

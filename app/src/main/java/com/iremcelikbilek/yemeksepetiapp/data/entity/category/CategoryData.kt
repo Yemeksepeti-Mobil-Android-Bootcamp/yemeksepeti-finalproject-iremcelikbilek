@@ -9,6 +9,8 @@ import kotlinx.parcelize.Parcelize
 data class CategoryData(
     @SerializedName("id")
     val id: String,
+    @SerializedName("image_url")
+    val imageUrl: String,
     @SerializedName("name")
     val name: String
 ): Parcelable

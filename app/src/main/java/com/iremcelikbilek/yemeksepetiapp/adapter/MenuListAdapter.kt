@@ -30,7 +30,7 @@ class MenuListAdapter: RecyclerView.Adapter<MenuListAdapter.MenuListViewHolder>(
 
     class MenuListViewHolder(var binding: ItemMenuListBinding): RecyclerView.ViewHolder(binding.root) {
         fun setItem(item: Menu, listener: IMenuListOnClick?) {
-            Glide.with(binding.root.context).load(item.imageUrl).placeholder(R.drawable.not_found).into(binding.menuImg)
+            Glide.with(binding.root.context).load(item.imageUrl).placeholder(R.drawable.loading).error(R.drawable.not_found).into(binding.menuImg)
             binding.menuNameTxt.text = item.name
             binding.menuDescriptionTxt.text = item.description
             binding.menuItemPrice.text = item.price

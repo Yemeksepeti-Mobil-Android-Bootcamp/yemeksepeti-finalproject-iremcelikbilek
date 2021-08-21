@@ -60,7 +60,7 @@ class MenuListFragment : Fragment() {
         binding.restaurantNameTxt.text = args.restaurantData.name
         binding.minimumPriceTxt.text = args.restaurantData.minimumPrice
         binding.estimatedArrivalTimeTxt.text = args.restaurantData.estimatedArrivalTime
-        Glide.with(view).load(args.restaurantData.imageUrl).placeholder(R.drawable.not_found).into(binding.restaurantImg)
+        Glide.with(view).load(args.restaurantData.imageUrl).placeholder(R.drawable.loading).error(R.drawable.not_found).into(binding.restaurantImg)
     }
 }
 

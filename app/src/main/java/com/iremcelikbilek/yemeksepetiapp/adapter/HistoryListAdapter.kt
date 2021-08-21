@@ -20,7 +20,7 @@ class HistoryListAdapter: RecyclerView.Adapter<HistoryListAdapter.HistoryListVie
 
     class HistoryListViewHolder(var binding: ItemHistoryListBinding): RecyclerView.ViewHolder(binding.root) {
         fun setItem(item: CartData) {
-            Glide.with(binding.root.context).load(item.menu.imageUrl).placeholder(R.drawable.not_found).into(binding.menuImg)
+            Glide.with(binding.root.context).load(item.menu.imageUrl).placeholder(R.drawable.loading).error(R.drawable.not_found).into(binding.menuImg)
             binding.restaurantNameTxt.text = item.name
             binding.menuNameTxt.text = item.menu.name
             binding.menuDescriptionTxt.text = item.menu.description

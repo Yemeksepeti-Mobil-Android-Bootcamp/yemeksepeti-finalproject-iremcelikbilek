@@ -12,6 +12,8 @@ import androidx.navigation.fragment.findNavController
 import com.iremcelikbilek.yemeksepetiapp.R
 import com.iremcelikbilek.yemeksepetiapp.databinding.FragmentSettingsBinding
 import com.iremcelikbilek.yemeksepetiapp.utils.Resource
+import com.iremcelikbilek.yemeksepetiapp.utils.gone
+import com.iremcelikbilek.yemeksepetiapp.utils.show
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -47,10 +49,12 @@ class SettingsFragment: Fragment() {
         viewModel.getUser().observe(viewLifecycleOwner, Observer {
             when(it.status) {
                 Resource.Status.LOADING -> {
-
+                    showLoading()
                 }
 
                 Resource.Status.SUCCESS -> {
+                    hideLoading()
+
                     val userData = it.data?.data
                     binding.fullNameTxt.text = userData?.personName + " " + userData?.personLastName
                     binding.emailTxt.text = userData?.personEmail
@@ -70,5 +74,15 @@ class SettingsFragment: Fragment() {
             }
         })
 
+    }
+
+    private fun showLoading() {
+        binding.loadingLayout.show()
+        binding.settingsLayout.gone()
+    }
+
+    private fun hideLoading() {
+        binding.loadingLayout.gone()
+        binding.settingsLayout.show()
     }
 }

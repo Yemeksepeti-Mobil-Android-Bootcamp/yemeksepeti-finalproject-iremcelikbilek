@@ -10,7 +10,7 @@ data class Menu(
     val description: String,
     @SerializedName("id")
     val id: String,
-    @SerializedName("image_url")
+    @SerializedName("imageUrl")
     val imageUrl: String,
     @SerializedName("name")
     val name: String,
