@@ -39,7 +39,11 @@
         android:id="@+id/settingsFragment"
         tools:layout="@layout/fragment_settings"
         android:name="com.iremcelikbilek.yemeksepetiapp.ui.profile.settings.SettingsFragment"
-        android:label="SettingsFragment" />
+        android:label="SettingsFragment" >
+        <action
+            android:id="@+id/action_settingsFragment_to_historyFragment"
+            app:destination="@id/historyFragment" />
+    </fragment>
     <fragment
         android:id="@+id/menuListFragment"
         tools:layout="@layout/fragment_menu_list"
@@ -91,5 +95,10 @@
             android:id="@+id/action_cartFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/historyFragment"
+        tools:layout="@layout/fragment_history"
+        android:name="com.iremcelikbilek.yemeksepetiapp.ui.history.HistoryFragment"
+        android:label="HistoryFragment" />
 
 </navigation>

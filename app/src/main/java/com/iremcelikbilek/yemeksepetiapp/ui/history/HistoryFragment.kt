@@ -1,4 +1,4 @@
-package com.iremcelikbilek.yemeksepetiapp.ui.profile.settings
+package com.iremcelikbilek.yemeksepetiapp.ui.history
 
 import android.app.AlertDialog
 import android.os.Bundle
@@ -9,52 +9,49 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import com.iremcelikbilek.yemeksepetiapp.R
-import com.iremcelikbilek.yemeksepetiapp.databinding.FragmentSettingsBinding
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.iremcelikbilek.yemeksepetiapp.adapter.CartListAdapter
+import com.iremcelikbilek.yemeksepetiapp.adapter.HistoryListAdapter
+import com.iremcelikbilek.yemeksepetiapp.data.entity.category.CategoryData
+import com.iremcelikbilek.yemeksepetiapp.databinding.FragmentHistoryBinding
+import com.iremcelikbilek.yemeksepetiapp.ui.home.HomeFragmentDirections
+import com.iremcelikbilek.yemeksepetiapp.ui.home.ICategoryItemOnClick
 import com.iremcelikbilek.yemeksepetiapp.utils.Resource
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SettingsFragment: Fragment() {
+class HistoryFragment: Fragment() {
 
-    private lateinit var binding: FragmentSettingsBinding
-    private val viewModel: SettingsViewModel by viewModels()
+    private lateinit var binding: FragmentHistoryBinding
+    private val viewModel: HistoryViewModel by viewModels()
+    private var historyAdapter: HistoryListAdapter = HistoryListAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentSettingsBinding.inflate(inflater, container, false)
+        binding = FragmentHistoryBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        observeUser()
+        initViews()
 
-        historyLayoutListener()
+        observeHistoryList()
     }
 
-    private fun historyLayoutListener() {
-        binding.historyLayout.setOnClickListener {
-            findNavController().navigate(SettingsFragmentDirections.actionSettingsFragmentToHistoryFragment())
-        }
-    }
-
-    private fun observeUser() {
-        viewModel.getUser().observe(viewLifecycleOwner, Observer {
+    private fun observeHistoryList() {
+        viewModel.getHistoryOrderList().observe(viewLifecycleOwner, Observer {
             when(it.status) {
                 Resource.Status.LOADING -> {
 
                 }
 
                 Resource.Status.SUCCESS -> {
-                    val userData = it.data?.data
-                    binding.fullNameTxt.text = userData?.personName + " " + userData?.personLastName
-                    binding.emailTxt.text = userData?.personEmail
-                    binding.phoneTxt.text = userData?.personPhone
+                    historyAdapter.setHistoryList(it.data)
                 }
 
                 Resource.Status.ERROR -> {
@@ -69,6 +66,10 @@ class SettingsFragment: Fragment() {
                 }
             }
         })
+    }
 
+    private fun initViews() {
+        binding.historyRv.layoutManager = LinearLayoutManager(context)
+        binding.historyRv.adapter = historyAdapter
     }
 }

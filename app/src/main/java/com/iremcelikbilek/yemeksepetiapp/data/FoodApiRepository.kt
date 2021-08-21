@@ -63,4 +63,6 @@ class FoodApiRepository @Inject constructor(
     fun removeToCart(token: String?, restaurantId: String?, menuId: String?) = performNetworkOperation { remoteDataSource.removeToCart(token, restaurantId, menuId) }
 
     fun completeOrder(token: String?) = performNetworkOperation { remoteDataSource.completeOrder(token) }
+
+    fun getHistoryOrderList(token: String?) = performNetworkOperation { remoteDataSource.getHistoryOrderList(token) }
 }

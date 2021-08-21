@@ -31,4 +31,6 @@ class RemoteDataSource @Inject constructor(
     suspend fun removeToCart(token: String?, restaurantId: String?, menuId: String?) = getResult { foodApiService.removeToCart(token, restaurantId, menuId) }
 
     suspend fun completeOrder(token: String?) = getResult { foodApiService.completeOrder(token) }
+
+    suspend fun getHistoryOrderList(token: String?) = getResult { foodApiService.getHistoryOrderList(token) }
 }

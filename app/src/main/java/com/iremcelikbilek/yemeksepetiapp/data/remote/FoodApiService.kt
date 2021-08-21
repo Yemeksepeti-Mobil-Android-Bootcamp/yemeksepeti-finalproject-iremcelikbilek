@@ -6,6 +6,7 @@ import com.iremcelikbilek.yemeksepetiapp.data.entity.cart.completeOrder.Complete
 import com.iremcelikbilek.yemeksepetiapp.data.entity.cart.removeCart.RemoveCartResponse
 import com.iremcelikbilek.yemeksepetiapp.data.entity.category.CategoryResponse
 import com.iremcelikbilek.yemeksepetiapp.data.entity.citylist.CityListResponse
+import com.iremcelikbilek.yemeksepetiapp.data.entity.history.HistoryResponse
 import com.iremcelikbilek.yemeksepetiapp.data.entity.login.LoginRequest
 import com.iremcelikbilek.yemeksepetiapp.data.entity.login.LoginResponse
 import com.iremcelikbilek.yemeksepetiapp.data.entity.register.RegisterRequest
@@ -60,5 +61,8 @@ interface FoodApiService {
 
     @GET("checkout")
     suspend fun completeOrder(@Header("token") token: String?) : Response<CompleteOrderResponse>
+
+    @GET("history")
+    suspend fun getHistoryOrderList(@Header("token") token: String?) : Response<HistoryResponse>
 
 }
