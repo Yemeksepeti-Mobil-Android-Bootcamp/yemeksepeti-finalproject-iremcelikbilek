@@ -11,6 +11,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.iremcelikbilek.yemeksepetiapp.R
 import com.iremcelikbilek.yemeksepetiapp.adapter.MenuListAdapter
 import com.iremcelikbilek.yemeksepetiapp.data.entity.common.Menu
 import com.iremcelikbilek.yemeksepetiapp.databinding.FragmentMenuListBinding
@@ -35,37 +36,31 @@ class MenuListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.menuListRv.layoutManager = LinearLayoutManager(context)
-        binding.menuListRv.adapter = menuListAdapter
-        menuListAdapter.setMenuList(args.restaurantData)
-        binding.restaurantNameTxt.text = args.restaurantData.name
-        binding.minimumPriceTxt.text = args.restaurantData.minimumPrice
-        binding.estimatedArrivalTimeTxt.text = args.restaurantData.estimatedArrivalTime
-        Glide.with(view).load(args.restaurantData.imageUrl).into(binding.restaurantImg)
+        initViews(view)
 
+        menuListAdapterListener()
+    }
+
+    private fun menuListAdapterListener() {
         menuListAdapter.addListener(object: IMenuListOnClick{
             override fun onClick(item: Menu) {
                 val restaurantName = args.restaurantData.name
                 val restaurantId = args.restaurantData.id
                 findNavController().navigate(MenuListFragmentDirections.actionMenuListFragmentToMenuDetailFragment(item,restaurantName,restaurantId))
             }
-
         })
+    }
 
+    private fun initViews(view: View) {
+        binding.menuListRv.layoutManager = LinearLayoutManager(context)
+        binding.menuListRv.adapter = menuListAdapter
+
+        menuListAdapter.setMenuList(args.restaurantData)
+
+        binding.restaurantNameTxt.text = args.restaurantData.name
+        binding.minimumPriceTxt.text = args.restaurantData.minimumPrice
+        binding.estimatedArrivalTimeTxt.text = args.restaurantData.estimatedArrivalTime
+        Glide.with(view).load(args.restaurantData.imageUrl).placeholder(R.drawable.not_found).into(binding.restaurantImg)
     }
 }
 
-/*binding.collapsingToolbar.addOnLayoutChangeListener { v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom ->
-            if(bottom != oldBottom) binding.toolbarTxt.text = "Menu Listesi"
-        }
-
-
-        binding.menuListRv.addOnScrollListener(object: RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-                val position = (recyclerView.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
-                if(position > 0) {
-                    binding.toolbarTxt.text = "Menü Listesi"
-                }
-            }
-        })*/

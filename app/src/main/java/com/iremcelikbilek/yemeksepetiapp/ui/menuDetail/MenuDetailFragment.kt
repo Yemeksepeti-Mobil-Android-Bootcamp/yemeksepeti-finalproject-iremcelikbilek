@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
+import com.iremcelikbilek.yemeksepetiapp.R
 import com.iremcelikbilek.yemeksepetiapp.databinding.FragmentMenuDetailBinding
 import com.iremcelikbilek.yemeksepetiapp.utils.Resource
 import dagger.hilt.android.AndroidEntryPoint
@@ -49,7 +50,7 @@ class MenuDetailFragment: Fragment() {
         binding.menuDetailDescriptionTxt.text = args.menuItem.description
         binding.menuPriceTxt.text = args.menuItem.price
         binding.menuDetailRestaurantName.text = args.restaurantName
-        Glide.with(view).load(args.menuItem.imageUrl).into(binding.menuDetailImg)
+        Glide.with(view).load(args.menuItem.imageUrl).placeholder(R.drawable.not_found).into(binding.menuDetailImg)
     }
 
     private fun removeMenuListener() {

@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.iremcelikbilek.yemeksepetiapp.R
 import com.iremcelikbilek.yemeksepetiapp.data.entity.common.RestaurantData
 import com.iremcelikbilek.yemeksepetiapp.data.entity.restaurantList.RestaurantListResponse
 import com.iremcelikbilek.yemeksepetiapp.databinding.ItemHomeRestaurantListBinding
@@ -29,7 +30,7 @@ class HomeRestaurantListAdapter: RecyclerView.Adapter<HomeRestaurantListAdapter.
 
     class HomeRestaurantListViewHolder(var binding: ItemHomeRestaurantListBinding): RecyclerView.ViewHolder(binding.root) {
         fun setItem(item: RestaurantData, listener: IRestaurantListItemOnClick?) {
-            Glide.with(binding.root.context).load(item.imageUrl).into(binding.restaurantImg)
+            Glide.with(binding.root.context).load(item.imageUrl).placeholder(R.drawable.not_found).into(binding.restaurantImg)
             binding.restaurantNameTxt.text = item.name
             binding.minimumPriceTxt.text = item.minimumPrice
             binding.estimatedArrivalTimeTxt.text = item.estimatedArrivalTime

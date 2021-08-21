@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.iremcelikbilek.yemeksepetiapp.R
 import com.iremcelikbilek.yemeksepetiapp.data.entity.cart.CartData
 import com.iremcelikbilek.yemeksepetiapp.data.entity.cart.CartListResponse
 import com.iremcelikbilek.yemeksepetiapp.databinding.ItemCartListBinding
@@ -31,7 +32,7 @@ class CartListAdapter: RecyclerView.Adapter<CartListAdapter.CartListViewHolder>(
 
     class CartListViewHolder(var binding: ItemCartListBinding): RecyclerView.ViewHolder(binding.root) {
         fun setItem(item: CartData) {
-            Glide.with(binding.root.context).load(item.menu.imageUrl).into(binding.menuImg)
+            Glide.with(binding.root.context).load(item.menu.imageUrl).placeholder(R.drawable.not_found).into(binding.menuImg)
             binding.restaurantNameTxt.text = item.name
             binding.menuNameTxt.text = item.menu.name
             binding.priceTxt.text = item.menu.price
