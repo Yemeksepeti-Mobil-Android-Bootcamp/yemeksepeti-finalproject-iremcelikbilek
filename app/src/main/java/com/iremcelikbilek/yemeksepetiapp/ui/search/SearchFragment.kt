@@ -46,6 +46,7 @@ class SearchFragment: Fragment() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.search_menu, menu)
+        activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
 
         val menuItem: MenuItem = menu.findItem(R.id.action_search)
         val searchView: SearchView = menuItem.actionView as SearchView

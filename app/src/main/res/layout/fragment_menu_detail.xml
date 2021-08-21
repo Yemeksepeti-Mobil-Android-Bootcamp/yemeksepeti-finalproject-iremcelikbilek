@@ -21,6 +21,7 @@
         android:background="@drawable/menu_detail_background">
 
         <TextView
+            android:layout_marginTop="5dp"
             android:id="@+id/menu_detail_name_txt"
             android:gravity="center"
             android:layout_width="match_parent"
@@ -32,7 +33,7 @@
 
         <TextView
             android:id="@+id/menu_detail_restaurant_name"
-            android:layout_marginBottom="15dp"
+            android:layout_marginBottom="10dp"
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -42,8 +43,9 @@
             android:fontFamily="@font/montserrat_medium"/>
 
         <TextView
+            android:paddingHorizontal="10dp"
             android:id="@+id/menu_detail_description_txt"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="7dp"
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

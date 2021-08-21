@@ -111,7 +111,7 @@
                         android:id="@+id/full_name_txt"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="17sp"
+                        android:textSize="18sp"
                         android:fontFamily="@font/montserrat_medium"
                         android:textColor="@color/black"/>
 
@@ -120,7 +120,7 @@
                         android:id="@+id/email_txt"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="17sp"
+                        android:textSize="16sp"
                         android:fontFamily="@font/montserrat_medium"
                         android:textColor="@color/black"/>
 
@@ -128,7 +128,7 @@
                         android:id="@+id/phone_txt"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="17sp"
+                        android:textSize="15sp"
                         android:fontFamily="@font/montserrat_medium"
                         android:textColor="@color/black"/>
 
