@@ -31,11 +31,14 @@ class CartListAdapter: RecyclerView.Adapter<CartListAdapter.CartListViewHolder>(
     }
 
     class CartListViewHolder(var binding: ItemCartListBinding): RecyclerView.ViewHolder(binding.root) {
-        fun setItem(item: CartData) {
+        fun setItem(item: CartData, listener: ICartItemOnClick?) {
             Glide.with(binding.root.context).load(item.menu.imageUrl).placeholder(R.drawable.not_found).into(binding.menuImg)
             binding.restaurantNameTxt.text = item.name
             binding.menuNameTxt.text = item.menu.name
             binding.priceTxt.text = item.menu.price
+            binding.removeBtn.setOnClickListener {
+                listener?.onClick(item)
+            }
 
         }
 
@@ -47,7 +50,7 @@ class CartListAdapter: RecyclerView.Adapter<CartListAdapter.CartListViewHolder>(
     }
 
     override fun onBindViewHolder(holder: CartListViewHolder, position: Int) {
-        holder.setItem(cartList?.data!![position])
+        holder.setItem(cartList?.data!![position], listener)
     }
 
     override fun getItemCount(): Int = cartList?.data?.size ?: 0

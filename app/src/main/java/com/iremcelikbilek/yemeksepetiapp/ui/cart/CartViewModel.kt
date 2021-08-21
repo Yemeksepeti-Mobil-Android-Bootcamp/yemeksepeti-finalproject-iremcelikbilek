@@ -7,6 +7,7 @@ import com.iremcelikbilek.yemeksepetiapp.data.FoodApiRepository
 import com.iremcelikbilek.yemeksepetiapp.data.entity.cart.CartData
 import com.iremcelikbilek.yemeksepetiapp.data.entity.cart.CartListResponse
 import com.iremcelikbilek.yemeksepetiapp.data.entity.cart.completeOrder.CompleteOrderResponse
+import com.iremcelikbilek.yemeksepetiapp.data.entity.cart.removeCart.RemoveCartResponse
 import com.iremcelikbilek.yemeksepetiapp.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -23,6 +24,10 @@ class CartViewModel @Inject constructor(
 
     fun getCartList(): LiveData<Resource<CartListResponse>> {
         return foodApiRepository.getCartList(getToken())
+    }
+
+    fun removeCartData(restaurantId: String?, menuId: String?):  LiveData<Resource<RemoveCartResponse>> {
+        return foodApiRepository.removeToCart(getToken(), restaurantId, menuId)
     }
 
     private fun getToken(): String? = foodApiRepository.checkToken()

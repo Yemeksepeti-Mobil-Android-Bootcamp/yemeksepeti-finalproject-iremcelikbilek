@@ -30,16 +30,45 @@
        android:layout_width="match_parent"
        android:layout_height="match_parent"
        android:orientation="vertical"
-       android:gravity="center">
+       android:gravity="center"
+       android:layout_gravity="center">
+
+       <LinearLayout
+           android:visibility="gone"
+           android:id="@+id/no_cart_layout"
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:orientation="vertical"
+           android:gravity="center">
+
+           <ImageView
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:src="@drawable/ic_baseline_shopping_basket"/>
+
+           <TextView
+               android:gravity="center"
+               android:layout_marginTop="10dp"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_marginHorizontal="15dp"
+               android:text="Sepetinizde ürün bulunmamaktadır"
+               android:textSize="20sp"
+               android:textColor="@color/white"
+               android:fontFamily="@font/montserrat_medium"/>
+
+       </LinearLayout>
+
 
        <androidx.recyclerview.widget.RecyclerView
            android:id="@+id/cart_rv"
            android:layout_marginVertical="10dp"
            android:layout_marginHorizontal="30dp"
            android:layout_width="match_parent"
-           android:layout_height="400dp"/>
+           android:layout_height="400dp" />
 
        <RelativeLayout
+           android:id="@+id/total_price_layout"
            android:layout_marginTop="30dp"
            android:layout_marginBottom="10dp"
            android:layout_marginHorizontal="50dp"

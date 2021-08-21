@@ -11,11 +11,14 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.iremcelikbilek.yemeksepetiapp.adapter.CartListAdapter
+import com.iremcelikbilek.yemeksepetiapp.data.entity.cart.CartData
 import com.iremcelikbilek.yemeksepetiapp.data.entity.category.CategoryData
 import com.iremcelikbilek.yemeksepetiapp.databinding.FragmentCartBinding
 import com.iremcelikbilek.yemeksepetiapp.ui.home.HomeFragmentDirections
 import com.iremcelikbilek.yemeksepetiapp.ui.home.ICategoryItemOnClick
 import com.iremcelikbilek.yemeksepetiapp.utils.Resource
+import com.iremcelikbilek.yemeksepetiapp.utils.gone
+import com.iremcelikbilek.yemeksepetiapp.utils.show
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -42,7 +45,40 @@ class CartFragment : Fragment() {
 
         observeCart()
 
+        cartAdapterListener()
+
         completeOrderBtnListener()
+    }
+
+    private fun cartAdapterListener() {
+        cartAdapter.addListener(object: ICartItemOnClick {
+            override fun onClick(item: CartData) {
+                viewModel.removeCartData(item.id, item.menu.id).observe(viewLifecycleOwner, Observer { response ->
+                    when(response.status) {
+                        Resource.Status.LOADING -> {
+
+                        }
+
+                        Resource.Status.SUCCESS -> {
+                            observeCart()
+                        }
+
+                        Resource.Status.ERROR -> {
+                            val dialog = AlertDialog.Builder(context)
+                                .setTitle("Error")
+                                .setMessage("${response.message}")
+                                .setPositiveButton("ok") { dialog, button ->
+                                    dialog.dismiss()
+                                }
+                            dialog.show()
+
+                        }
+                    }
+
+                })
+            }
+
+        })
     }
 
     private fun completeOrderBtnListener() {
@@ -77,22 +113,33 @@ class CartFragment : Fragment() {
         viewModel.getCartList().observe(viewLifecycleOwner, Observer {
             when(it.status) {
                 Resource.Status.LOADING -> {
+                    binding.cartRv.gone()
+                    binding.totalPriceLayout.gone()
+                    binding.completeOrderBtn.gone()
 
                 }
 
                 Resource.Status.SUCCESS -> {
+                    binding.cartRv.show()
+                    binding.totalPriceLayout.show()
+                    binding.completeOrderBtn.show()
                     cartAdapter.setCartList(it.data)
                     binding.totalPriceTxt.text = viewModel.calculatePrice(it.data?.data)
+
                 }
 
                 Resource.Status.ERROR -> {
-                    val dialog = AlertDialog.Builder(context)
+                    binding.noCartLayout.show()
+                    binding.cartRv.gone()
+                    binding.totalPriceLayout.gone()
+                    binding.completeOrderBtn.gone()
+                    /*val dialog = AlertDialog.Builder(context)
                         .setTitle("Error")
                         .setMessage("${it.message}")
                         .setPositiveButton("ok") { dialog, button ->
                             dialog.dismiss()
                         }
-                    dialog.show()
+                    dialog.show()*/
 
                 }
             }

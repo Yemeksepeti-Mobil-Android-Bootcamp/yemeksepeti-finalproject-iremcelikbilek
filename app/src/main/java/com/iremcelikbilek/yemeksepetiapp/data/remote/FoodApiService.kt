@@ -51,7 +51,7 @@ interface FoodApiService {
         @Query("count") count: Int?
     ): Response<AddCartResponse>
 
-    @GET("removeToCart")
+    @GET("removeToBasket")
     suspend fun removeToCart(
         @Header("token") token: String?,
         @Query("restaurant") restaurantId: String?,
