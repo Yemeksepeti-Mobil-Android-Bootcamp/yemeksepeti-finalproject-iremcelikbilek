@@ -86,6 +86,10 @@
         android:id="@+id/cartFragment"
         tools:layout="@layout/fragment_cart"
         android:name="com.iremcelikbilek.yemeksepetiapp.ui.cart.CartFragment"
-        android:label="CartFragment" />
+        android:label="CartFragment" >
+        <action
+            android:id="@+id/action_cartFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
 
 </navigation>

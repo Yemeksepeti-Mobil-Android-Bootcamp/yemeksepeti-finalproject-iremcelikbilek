@@ -14,7 +14,7 @@ class MenuDetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val foodApiRepository: FoodApiRepository
 ): ViewModel() {
-    
+
     private var foodCounter: Int = 1
 
     fun addCartData(restaurantId: String?, menuId: String?): LiveData<Resource<AddCartResponse>> {

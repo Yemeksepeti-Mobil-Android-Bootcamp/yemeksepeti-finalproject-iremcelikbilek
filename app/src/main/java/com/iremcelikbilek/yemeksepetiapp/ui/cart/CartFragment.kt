@@ -41,6 +41,36 @@ class CartFragment : Fragment() {
         initViews()
 
         observeCart()
+
+        completeOrderBtnListener()
+    }
+
+    private fun completeOrderBtnListener() {
+        binding.completeOrderBtn.setOnClickListener {
+            viewModel.completeOrder().observe(viewLifecycleOwner, Observer {
+                when(it.status) {
+                    Resource.Status.LOADING -> {
+
+                    }
+
+                    Resource.Status.SUCCESS -> {
+                        findNavController().navigate(CartFragmentDirections.actionCartFragmentToHomeFragment())
+                    }
+
+                    Resource.Status.ERROR -> {
+                        val dialog = AlertDialog.Builder(context)
+                            .setTitle("Error")
+                            .setMessage("${it.message}")
+                            .setPositiveButton("ok") { dialog, button ->
+                                dialog.dismiss()
+                            }
+                        dialog.show()
+
+                    }
+                }
+            })
+        }
+
     }
 
     private fun observeCart() {
@@ -52,6 +82,7 @@ class CartFragment : Fragment() {
 
                 Resource.Status.SUCCESS -> {
                     cartAdapter.setCartList(it.data)
+                    binding.totalPriceTxt.text = viewModel.calculatePrice(it.data?.data)
                 }
 
                 Resource.Status.ERROR -> {
