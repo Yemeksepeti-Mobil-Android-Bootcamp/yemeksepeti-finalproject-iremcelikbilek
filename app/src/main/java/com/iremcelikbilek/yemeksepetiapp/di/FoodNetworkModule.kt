@@ -59,7 +59,7 @@ class FoodNetworkModule {
 
     @Provides
     fun provideEndpoint(): Endpoint {
-        return Endpoint("https://iremcelikbilek.yusufozgul.com/")
+        return Endpoint("https://yemeksepeti.iremcelikbilek.workers.dev/")
     }
 
 }
