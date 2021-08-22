@@ -12,7 +12,7 @@ android {
 
     defaultConfig {
         applicationId "com.iremcelikbilek.yemeksepetiapp"
-        minSdk 21
+        minSdk 23
         targetSdk 30
         versionCode 1
         versionName "1.0"
