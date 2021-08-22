@@ -17,6 +17,7 @@ This application is where you can see the restaurants in your city and order
 
 ## What did I use ?
 
+- [x] Unit Test (4 test case)
 - [x] MVVM architecture
 - [x] Dagger Hilt
 - [x] Retrofit
