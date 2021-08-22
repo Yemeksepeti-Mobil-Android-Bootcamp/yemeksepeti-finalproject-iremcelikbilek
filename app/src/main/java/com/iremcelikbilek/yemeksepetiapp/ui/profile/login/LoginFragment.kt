@@ -48,7 +48,11 @@ class LoginFragment: Fragment() {
         viewModel.login(email, password).observe(viewLifecycleOwner, Observer {
             when(it.status) {
                 Resource.Status.SUCCESS -> {
-                    findNavController().navigate(R.id.action_profileFragment_to_settingsFragment)
+                    if(it.data?.error == true) {
+                        showAlert(it.data.message)
+                    } else {
+                        findNavController().navigate(R.id.action_profileFragment_to_settingsFragment)
+                    }
                 }
 
                 Resource.Status.ERROR -> {

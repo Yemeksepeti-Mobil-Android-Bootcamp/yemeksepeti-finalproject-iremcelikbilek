@@ -10,8 +10,8 @@ data class RegisterRequest(
     val personLastName: String,
     @SerializedName("personPhone")
     val personPhone: String,
-    @SerializedName("password")
-    val password: String,
     @SerializedName("personEmail")
-    val personEmail: String
+    val personEmail: String,
+    @SerializedName("password")
+    val password: String
 )

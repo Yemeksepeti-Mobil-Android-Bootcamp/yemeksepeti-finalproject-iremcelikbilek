@@ -3,6 +3,7 @@ package com.iremcelikbilek.yemeksepetiapp.utils
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import com.iremcelikbilek.yemeksepetiapp.data.entity.login.LoginResponse
+import com.iremcelikbilek.yemeksepetiapp.data.entity.register.RegisterResponse
 import kotlinx.coroutines.Dispatchers
 
 fun <T> performNetworkOperation(call: suspend () -> Resource<T>) : LiveData<Resource<T>> {
@@ -11,8 +12,9 @@ fun <T> performNetworkOperation(call: suspend () -> Resource<T>) : LiveData<Reso
         val networkCall = call.invoke()
 
         if(networkCall.status == Resource.Status.SUCCESS) {
-            val data = networkCall.data!!
-            emit(Resource.success(data))
+            ifNotNull(networkCall.data) {
+                emit(Resource.success(it))
+            }
         } else if(networkCall.status == Resource.Status.ERROR) {
             emit(Resource.error("Error: ${networkCall.message}"))
         }
@@ -28,12 +30,19 @@ fun <T> performAuthTokenNetworkOperation(
         val networkCall = call.invoke()
 
         if(networkCall.status == Resource.Status.SUCCESS) {
-            val data = networkCall.data!!
-            if(data is LoginResponse) {
-                save(data.data.token)
+            ifNotNull(networkCall.data) {
+                if(it is LoginResponse) {
+                    ifNotNull(it.data?.token) { token ->
+                        save(token)
+                    }
+                }else if(it is RegisterResponse) {
+                    ifNotNull(it.data?.token) { token ->
+                        save(token)
+                    }
+                }
+                emit(Resource.success(it))
             }
 
-            emit(Resource.success(data))
         } else if(networkCall.status == Resource.Status.ERROR) {
             emit(Resource.error("Error: ${networkCall.message}"))
         }

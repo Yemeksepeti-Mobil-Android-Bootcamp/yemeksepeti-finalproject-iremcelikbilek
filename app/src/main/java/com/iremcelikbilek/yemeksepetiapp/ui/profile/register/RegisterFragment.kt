@@ -57,7 +57,11 @@ class RegisterFragment: Fragment() {
         viewModel.register(name, lastname, phone, email, password).observe(viewLifecycleOwner, Observer {
             when(it.status) {
                 Resource.Status.SUCCESS -> {
-                    findNavController().navigate(R.id.action_profileFragment_to_settingsFragment)
+                    if(it.data?.error == true) {
+                        showAlert(it.data.message)
+                    } else {
+                        findNavController().navigate(R.id.action_profileFragment_to_settingsFragment)
+                    }
                 }
 
                 Resource.Status.ERROR -> {

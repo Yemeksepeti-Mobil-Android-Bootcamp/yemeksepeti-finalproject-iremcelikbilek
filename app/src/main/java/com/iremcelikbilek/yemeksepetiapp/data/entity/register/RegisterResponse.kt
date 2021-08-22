@@ -6,7 +6,7 @@ import com.iremcelikbilek.yemeksepetiapp.data.entity.common.Data
 
 data class RegisterResponse(
     @SerializedName("data")
-    val `data`: Data,
+    val `data`: Data?,
     @SerializedName("error")
     val error: Boolean,
     @SerializedName("message")
