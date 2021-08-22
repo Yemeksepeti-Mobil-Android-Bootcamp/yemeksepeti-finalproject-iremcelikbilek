@@ -1,6 +1,5 @@
 package com.iremcelikbilek.yemeksepetiapp.ui.cart
 
-import android.app.AlertDialog
 import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -18,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.iremcelikbilek.yemeksepetiapp.R
 import com.iremcelikbilek.yemeksepetiapp.adapter.CartListAdapter
 import com.iremcelikbilek.yemeksepetiapp.data.entity.cart.CartData
+import com.iremcelikbilek.yemeksepetiapp.data.entity.cart.CartListResponse
 import com.iremcelikbilek.yemeksepetiapp.databinding.FragmentCartBinding
 import com.iremcelikbilek.yemeksepetiapp.utils.*
 import dagger.hilt.android.AndroidEntryPoint
@@ -54,53 +54,51 @@ class CartFragment : Fragment() {
     private fun cartAdapterListener() {
         cartAdapter.addListener(object: ICartItemOnClick {
             override fun onClick(item: CartData) {
-                viewModel.removeCartData(item.id, item.menu.id).observe(viewLifecycleOwner, Observer { response ->
-                    when(response.status) {
-                        Resource.Status.LOADING -> {
-
-                        }
-
-                        Resource.Status.SUCCESS -> {
-                            observeCart()
-                        }
-
-                        Resource.Status.ERROR -> {
-                           showAlert(response.message)
-                        }
-                    }
-
-                })
+                observeRemoveCartData(item)
             }
+        })
+    }
 
+    private fun observeRemoveCartData(item: CartData) {
+        viewModel.removeCartData(item.id, item.menu.id).observe(viewLifecycleOwner, Observer { response ->
+            when(response.status) {
+                Resource.Status.LOADING -> {
+
+                }
+
+                Resource.Status.SUCCESS -> {
+                    observeCart()
+                }
+
+                Resource.Status.ERROR -> {
+                    showAlert(response.message)
+                }
+            }
         })
     }
 
     private fun completeOrderBtnListener() {
         binding.completeOrderBtn.setOnClickListener {
-            viewModel.completeOrder().observe(viewLifecycleOwner, Observer {
-                when(it.status) {
-                    Resource.Status.LOADING -> {
-
-                    }
-
-                    Resource.Status.SUCCESS -> {
-                        showDialog()
-                    }
-
-                    Resource.Status.ERROR -> {
-                        val dialog = AlertDialog.Builder(context)
-                            .setTitle("Error")
-                            .setMessage("${it.message}")
-                            .setPositiveButton("ok") { dialog, button ->
-                                dialog.dismiss()
-                            }
-                        dialog.show()
-
-                    }
-                }
-            })
+            observeOrder()
         }
+    }
 
+    private fun observeOrder() {
+        viewModel.completeOrder().observe(viewLifecycleOwner, Observer {
+            when(it.status) {
+                Resource.Status.LOADING -> {
+
+                }
+
+                Resource.Status.SUCCESS -> {
+                    showDialog()
+                }
+
+                Resource.Status.ERROR -> {
+                    showAlert(it.message)
+                }
+            }
+        })
     }
 
     private fun observeCart() {
@@ -114,10 +112,7 @@ class CartFragment : Fragment() {
                 Resource.Status.SUCCESS -> {
                     showCartLayout()
                     binding.loadingLayout.gone()
-
-                    cartAdapter.setCartList(it.data)
-                    binding.totalPriceTxt.text = viewModel.calculatePrice(it.data?.data)
-
+                    setCartData(it.data)
                 }
 
                 Resource.Status.ERROR -> {
@@ -127,6 +122,11 @@ class CartFragment : Fragment() {
                 }
             }
         })
+    }
+
+    private fun setCartData(data: CartListResponse?) {
+        cartAdapter.setCartList(data)
+        binding.totalPriceTxt.text = viewModel.calculatePrice(data?.data)
     }
 
     private fun hideCartLayout() {
@@ -159,5 +159,10 @@ class CartFragment : Fragment() {
             findNavController().navigate(CartFragmentDirections.actionCartFragmentToHomeFragment())
         }
         dialog.show()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        cartAdapter.removeListener()
     }
 }

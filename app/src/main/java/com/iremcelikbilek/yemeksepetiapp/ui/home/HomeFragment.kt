@@ -160,5 +160,6 @@ class HomeFragment: Fragment() {
     override fun onPause() {
         super.onPause()
         restaurantListAdapter.removeListener()
+        categoryListAdapter.removeListener()
     }
 }

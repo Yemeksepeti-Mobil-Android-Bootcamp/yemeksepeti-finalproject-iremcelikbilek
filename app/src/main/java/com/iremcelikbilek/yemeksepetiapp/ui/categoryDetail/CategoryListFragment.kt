@@ -40,7 +40,7 @@ class CategoryListFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initViews(view)
+        initViews()
 
         observeRestaurantListByCategoryId(args.categoryData.id)
     }
@@ -78,7 +78,7 @@ class CategoryListFragment: Fragment() {
         }
     }
 
-    private fun initViews(view: View) {
+    private fun initViews() {
         binding.categoryNameTxt.text = args.categoryData.name
         binding.categoryRv.layoutManager = LinearLayoutManager(context)
         binding.categoryRv.adapter = adapter
@@ -92,5 +92,10 @@ class CategoryListFragment: Fragment() {
     private fun hideLoading() {
         binding.loadingLayout.gone()
         binding.categoryRv.show()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        adapter.removeListener()
     }
 }

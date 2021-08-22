@@ -60,5 +60,10 @@ class MenuListFragment : Fragment() {
         binding.estimatedArrivalTimeTxt.text = args.restaurantData.estimatedArrivalTime
         Glide.with(view).load(args.restaurantData.imageUrl).placeholder(R.drawable.loading).error(R.drawable.not_found).into(binding.restaurantImg)
     }
+
+    override fun onPause() {
+        super.onPause()
+        menuListAdapter.removeListener()
+    }
 }
 
