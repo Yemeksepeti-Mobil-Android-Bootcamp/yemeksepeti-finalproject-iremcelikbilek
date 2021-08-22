@@ -169,6 +169,16 @@
 
         </androidx.cardview.widget.CardView>
 
+        <TextView
+            android:id="@+id/logout_btn"
+            android:layout_marginStart="35dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Çıkış Yap"
+            android:textSize="20sp"
+            android:fontFamily="@font/montserrat_bold"
+            android:textColor="@color/accentColor"/>
+
     </LinearLayout>
 
 </LinearLayout>

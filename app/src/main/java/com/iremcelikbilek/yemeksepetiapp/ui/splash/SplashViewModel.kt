@@ -1,4 +1,4 @@
-package com.iremcelikbilek.yemeksepetiapp.ui.profile.settings
+package com.iremcelikbilek.yemeksepetiapp.ui.splash
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -7,14 +7,10 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class SettingsViewModel @Inject constructor(
+class SplashViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val foodApiRepository: FoodApiRepository
 ): ViewModel() {
-    fun getUser() = foodApiRepository.getUser(getToken())
 
-    fun logout() = foodApiRepository.logout()
-
-    private fun getToken() = foodApiRepository.checkToken()
-
+    fun getCity(): String? = foodApiRepository.getCity()
 }

@@ -11,8 +11,10 @@ import androidx.datastore.DataStore
 import androidx.datastore.preferences.Preferences
 import androidx.datastore.preferences.preferencesKey
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.iremcelikbilek.yemeksepetiapp.HomeActivity
 import com.iremcelikbilek.yemeksepetiapp.databinding.FragmentSplashBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -24,14 +26,19 @@ import javax.inject.Inject
 class SplashFragment: Fragment() {
 
     private lateinit var binding: FragmentSplashBinding
+    private val viewModel : SplashViewModel by viewModels()
     @Inject lateinit var preferences: DataStore<Preferences>
     private val handler = Handler()
     private val runnable = Runnable {
         lifecycleScope.launch {
             preferences.data.collectLatest {
                 if(it[preferencesKey<Boolean>("oneTime")] == true) {
-                    startActivity(Intent(context, HomeActivity::class.java))
-                    requireActivity().finish()
+                    if(viewModel.getCity() == "") {
+                        findNavController().navigate(SplashFragmentDirections.actionSplashFragmentToCityListFragment())
+                    }else {
+                        startActivity(Intent(context, HomeActivity::class.java))
+                        requireActivity().finish()
+                    }
                 } else {
                     requireView().findNavController().navigate(SplashFragmentDirections.actionSplashFragmentToOnboardingFragment())
                 }

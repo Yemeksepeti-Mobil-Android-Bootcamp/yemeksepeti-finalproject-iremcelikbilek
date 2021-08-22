@@ -13,21 +13,10 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 @Module
 @InstallIn(ActivityRetainedComponent::class)
 class DataStoreModule {
-
-   /* @Provides
-    fun providePreferences(@ApplicationContext context: Context): DataStoreManager {
-        return DataStoreManager(context)
-    }*/
-
-     @Provides
+    @Provides
     fun providePreferences(@ApplicationContext context: Context): DataStore<Preferences> {
         return context.createDataStore(
             name = "com.iremcelikbilek.yemeksepetiapp.di"
         )
     }
-
-   /* @Provides
-    fun localDataSource(dataStoreManager: DataStoreManager): LocaleDataSource {
-        return LocaleDataSource(dataStoreManager)
-    }*/
 }

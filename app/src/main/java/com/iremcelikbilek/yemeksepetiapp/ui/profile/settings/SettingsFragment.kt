@@ -1,5 +1,6 @@
 package com.iremcelikbilek.yemeksepetiapp.ui.profile.settings
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.iremcelikbilek.yemeksepetiapp.MainActivity
 import com.iremcelikbilek.yemeksepetiapp.data.entity.user.UserData
 import com.iremcelikbilek.yemeksepetiapp.databinding.FragmentSettingsBinding
 import com.iremcelikbilek.yemeksepetiapp.utils.Resource
@@ -37,6 +39,16 @@ class SettingsFragment: Fragment() {
         observeUser()
 
         historyLayoutListener()
+
+        logoutBtnListener()
+    }
+
+    private fun logoutBtnListener() {
+        binding.logoutBtn.setOnClickListener {
+            viewModel.logout()
+            startActivity(Intent(context, MainActivity::class.java))
+            requireActivity().finish()
+        }
     }
 
     private fun historyLayoutListener() {

@@ -65,4 +65,9 @@ class FoodApiRepository @Inject constructor(
     fun completeOrder(token: String?) = performNetworkOperation { remoteDataSource.completeOrder(token) }
 
     fun getHistoryOrderList(token: String?) = performNetworkOperation { remoteDataSource.getHistoryOrderList(token) }
+
+    fun logout() {
+        localeDataSource.saveToken("")
+        localeDataSource.saveCity("")
+    }
 }
