@@ -7,7 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.iremcelikbilek.yemeksepetiapp.R
 import com.iremcelikbilek.yemeksepetiapp.adapter.HistoryListAdapter
 import com.iremcelikbilek.yemeksepetiapp.databinding.FragmentHistoryBinding
 import com.iremcelikbilek.yemeksepetiapp.utils.Resource
@@ -46,7 +48,11 @@ class HistoryFragment: Fragment() {
 
                 Resource.Status.SUCCESS -> {
                     hideLoading()
-                    historyAdapter.setHistoryList(it.data)
+                    if(it.data?.error == true) {
+                        showAlert(it.data.message)
+                    } else {
+                        historyAdapter.setHistoryList(it.data)
+                    }
                 }
 
                 Resource.Status.ERROR -> {

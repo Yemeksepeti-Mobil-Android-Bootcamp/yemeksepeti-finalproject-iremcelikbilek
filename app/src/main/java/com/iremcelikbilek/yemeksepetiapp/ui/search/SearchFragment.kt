@@ -78,7 +78,11 @@ class SearchFragment: Fragment() {
 
                 Resource.Status.SUCCESS -> {
                     hideLoading()
-                    setSearchData(it.data)
+                    if(it.data?.error == true) {
+                        showAlert(it.data.message)
+                    } else {
+                        setSearchData(it.data)
+                    }
                 }
 
                 Resource.Status.ERROR -> {
