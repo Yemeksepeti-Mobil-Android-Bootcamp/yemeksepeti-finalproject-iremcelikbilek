@@ -42,7 +42,9 @@ class CartFragment : Fragment() {
         initViews()
 
         if(viewModel.getToken() == "") {
-            showAlert("Sipariş verebilmek için önce giriş yapmalısınız.")
+            showCustomAlert("Uyarı","Sipariş verebilmek için önce giriş yapmalısınız.", "Giriş Yap", navigate = {
+                findNavController().navigate(CartFragmentDirections.actionCartFragmentToProfileFragment())
+            })
         } else {
             observeCart()
             cartAdapterListener()

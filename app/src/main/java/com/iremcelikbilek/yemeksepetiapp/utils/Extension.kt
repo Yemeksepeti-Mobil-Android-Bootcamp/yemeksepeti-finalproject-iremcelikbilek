@@ -24,6 +24,17 @@ fun Fragment.showAlert(message: String?) {
         }.show()
 }
 
+fun Fragment.showCustomAlert(title: String?, message: String?, buttonTitle: String?, navigate: () -> Unit) {
+    AlertDialog.Builder(context)
+        .setTitle(title)
+        .setMessage(message)
+        .setCancelable(false)
+        .setPositiveButton(buttonTitle) { dialog, button ->
+            navigate()
+            dialog.dismiss()
+        }.show()
+}
+
 fun ImageView.loadFromUrl(imageUrl: String) {
     Glide.with(this).load(imageUrl).placeholder(R.drawable.loading).error(R.drawable.not_found).into(this)
 }
