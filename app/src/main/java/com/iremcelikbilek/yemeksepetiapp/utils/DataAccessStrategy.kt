@@ -16,7 +16,6 @@ fun <T> performNetworkOperation(call: suspend () -> Resource<T>) : LiveData<Reso
         } else if(networkCall.status == Resource.Status.ERROR) {
             emit(Resource.error("Error: ${networkCall.message}"))
         }
-
     }
 }
 
@@ -38,6 +37,5 @@ fun <T> performAuthTokenNetworkOperation(
         } else if(networkCall.status == Resource.Status.ERROR) {
             emit(Resource.error("Error: ${networkCall.message}"))
         }
-
     }
 }

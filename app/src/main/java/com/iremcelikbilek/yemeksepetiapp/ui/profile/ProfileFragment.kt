@@ -1,7 +1,6 @@
 package com.iremcelikbilek.yemeksepetiapp.ui.profile
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -33,13 +32,12 @@ class ProfileFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.checkToken().let {
-            if(it != null && it != "") {
-                Log.v("ProfileFragment", "Token is: $it")
-                findNavController().navigate(R.id.action_profileFragment_to_settingsFragment)
-            }
-        }
+        checkToken()
 
+        setAdapter()
+    }
+
+    private fun setAdapter() {
         adapter = ProfileAdapter(requireActivity().supportFragmentManager, lifecycle)
         binding.profileViewPager.adapter = adapter
         TabLayoutMediator(binding.profileTabLayout, binding.profileViewPager) {tab, position ->
@@ -48,5 +46,13 @@ class ProfileFragment: Fragment() {
                 1 -> tab.text = "Login"
             }
         }.attach()
+    }
+
+    private fun checkToken() {
+        viewModel.checkToken().let {
+            if(it != null && it != "") {
+                findNavController().navigate(R.id.action_profileFragment_to_settingsFragment)
+            }
+        }
     }
 }

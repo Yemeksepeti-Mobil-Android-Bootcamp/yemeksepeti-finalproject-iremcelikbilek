@@ -1,6 +1,5 @@
 package com.iremcelikbilek.yemeksepetiapp.ui.onboarding
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,11 +10,9 @@ import androidx.datastore.preferences.Preferences
 import androidx.datastore.preferences.edit
 import androidx.datastore.preferences.preferencesKey
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.viewpager2.widget.ViewPager2
-import com.iremcelikbilek.yemeksepetiapp.HomeActivity
 import com.iremcelikbilek.yemeksepetiapp.R
 import com.iremcelikbilek.yemeksepetiapp.adapter.OnboardingAdapter
 import com.iremcelikbilek.yemeksepetiapp.data.entity.onboarding.OnboardingData
@@ -50,9 +47,18 @@ class OnboardingFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        initViews()
+
+        viewPagerOnPageChangedCallback()
+    }
+
+    private fun initViews() {
         binding.viewPager.adapter = onboardingAdapter
         binding.indicator.setViewPager(binding.viewPager)
+    }
 
+    private fun viewPagerOnPageChangedCallback() {
         binding.viewPager.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
@@ -68,8 +74,6 @@ class OnboardingFragment: Fragment() {
                         }
 
                         requireView().findNavController().navigate(OnboardingFragmentDirections.actionOnboardingFragmentToCityListFragment())
-                        //startActivity(Intent(context, HomeActivity::class.java))
-                        //requireActivity().finish()
                     }
                 } else {
                     binding.buttonNext.text = "Next"
@@ -81,7 +85,6 @@ class OnboardingFragment: Fragment() {
                 }
             }
         })
-
     }
 
     suspend fun saveOnboarding() {

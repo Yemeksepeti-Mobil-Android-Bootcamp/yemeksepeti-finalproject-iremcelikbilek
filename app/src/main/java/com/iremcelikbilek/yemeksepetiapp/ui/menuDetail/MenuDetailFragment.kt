@@ -1,6 +1,5 @@
 package com.iremcelikbilek.yemeksepetiapp.ui.menuDetail
 
-import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +13,7 @@ import com.bumptech.glide.Glide
 import com.iremcelikbilek.yemeksepetiapp.R
 import com.iremcelikbilek.yemeksepetiapp.databinding.FragmentMenuDetailBinding
 import com.iremcelikbilek.yemeksepetiapp.utils.Resource
+import com.iremcelikbilek.yemeksepetiapp.utils.showAlert
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -82,19 +82,11 @@ class MenuDetailFragment: Fragment() {
                     }
 
                     Resource.Status.ERROR -> {
-                        val dialog = AlertDialog.Builder(context)
-                            .setTitle("Error")
-                            .setMessage("${it.message}")
-                            .setPositiveButton("ok") { dialog, button ->
-                                dialog.dismiss()
-                            }
-                        dialog.show()
-
+                        showAlert(it.message)
                     }
                 }
             })
         }
-
     }
 
 }

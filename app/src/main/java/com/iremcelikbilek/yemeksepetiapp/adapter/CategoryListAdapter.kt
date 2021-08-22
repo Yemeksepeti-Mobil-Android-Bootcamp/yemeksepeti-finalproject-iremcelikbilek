@@ -15,7 +15,7 @@ class CategoryListAdapter: RecyclerView.Adapter<CategoryListAdapter.CategoryList
     private var categoryList: CategoryResponse? = null
     private var listener: ICategoryItemOnClick? = null
 
-    fun setCategoryList(categoryList: CategoryResponse) {
+    fun setCategoryList(categoryList: CategoryResponse?) {
         this.categoryList = categoryList
         notifyDataSetChanged()
     }

@@ -1,6 +1,5 @@
 package com.iremcelikbilek.yemeksepetiapp.ui.citylist
 
-import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -18,8 +17,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.iremcelikbilek.yemeksepetiapp.HomeActivity
 import com.iremcelikbilek.yemeksepetiapp.adapter.CityListAdapter
 import com.iremcelikbilek.yemeksepetiapp.data.entity.citylist.CityData
+import com.iremcelikbilek.yemeksepetiapp.data.entity.citylist.CityListResponse
 import com.iremcelikbilek.yemeksepetiapp.databinding.FragmentCityListBinding
 import com.iremcelikbilek.yemeksepetiapp.utils.Resource
+import com.iremcelikbilek.yemeksepetiapp.utils.showAlert
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -47,9 +48,17 @@ class CityListFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        initViews()
+
+        observeCityList()
+    }
+
+    private fun initViews() {
         binding.cityListRv.layoutManager = LinearLayoutManager(context)
         binding.cityListRv.adapter = cityListAdapter
+    }
 
+    private fun observeCityList() {
         viewModel.getCityList().observe(viewLifecycleOwner, Observer {
             when(it.status) {
                 Resource.Status.LOADING -> {
@@ -57,37 +66,31 @@ class CityListFragment: Fragment() {
                 }
 
                 Resource.Status.SUCCESS -> {
-                    cityListAdapter.setCityList(it.data)
-
-                    cityListAdapter.addListener(object: ICityListItemOnClick {
-                        override fun onClick(item: CityData) {
-                            lifecycleScope.launch {
-                                saveOneTime()
-                            }
-
-                            viewModel.saveCity(item.id)
-                            startActivity(Intent(context, HomeActivity::class.java))
-                            requireActivity().finish()
-                        }
-
-                    })
-
+                    setData(it.data)
                 }
 
                 Resource.Status.ERROR -> {
-                    val dialog = AlertDialog.Builder(context)
-                        .setTitle("Error")
-                        .setMessage("${it.message}")
-                        .setPositiveButton("ok") { dialog, button ->
-                            dialog.dismiss()
-                        }
-                    dialog.show()
-
+                    showAlert(it.message)
                 }
             }
         })
 
+    }
 
+    private fun setData(data: CityListResponse?) {
+        cityListAdapter.setCityList(data)
+
+        cityListAdapter.addListener(object: ICityListItemOnClick {
+            override fun onClick(item: CityData) {
+                lifecycleScope.launch {
+                    saveOneTime()
+                }
+
+                viewModel.saveCity(item.id)
+                startActivity(Intent(context, HomeActivity::class.java))
+                requireActivity().finish()
+            }
+        })
     }
 
     override fun onPause() {

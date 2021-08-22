@@ -65,14 +65,7 @@ class CartFragment : Fragment() {
                         }
 
                         Resource.Status.ERROR -> {
-                            val dialog = AlertDialog.Builder(context)
-                                .setTitle("Error")
-                                .setMessage("${response.message}")
-                                .setPositiveButton("ok") { dialog, button ->
-                                    dialog.dismiss()
-                                }
-                            dialog.show()
-
+                           showAlert(response.message)
                         }
                     }
 

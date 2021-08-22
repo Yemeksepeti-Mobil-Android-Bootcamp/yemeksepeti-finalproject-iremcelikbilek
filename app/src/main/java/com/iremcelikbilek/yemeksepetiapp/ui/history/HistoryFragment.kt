@@ -1,6 +1,5 @@
 package com.iremcelikbilek.yemeksepetiapp.ui.history
 
-import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,17 +7,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.iremcelikbilek.yemeksepetiapp.adapter.CartListAdapter
 import com.iremcelikbilek.yemeksepetiapp.adapter.HistoryListAdapter
-import com.iremcelikbilek.yemeksepetiapp.data.entity.category.CategoryData
 import com.iremcelikbilek.yemeksepetiapp.databinding.FragmentHistoryBinding
-import com.iremcelikbilek.yemeksepetiapp.ui.home.HomeFragmentDirections
-import com.iremcelikbilek.yemeksepetiapp.ui.home.ICategoryItemOnClick
 import com.iremcelikbilek.yemeksepetiapp.utils.Resource
 import com.iremcelikbilek.yemeksepetiapp.utils.gone
 import com.iremcelikbilek.yemeksepetiapp.utils.show
+import com.iremcelikbilek.yemeksepetiapp.utils.showAlert
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -58,14 +53,7 @@ class HistoryFragment: Fragment() {
                 }
 
                 Resource.Status.ERROR -> {
-                    val dialog = AlertDialog.Builder(context)
-                        .setTitle("Error")
-                        .setMessage("${it.message}")
-                        .setPositiveButton("ok") { dialog, button ->
-                            dialog.dismiss()
-                        }
-                    dialog.show()
-
+                    showAlert(it.message)
                 }
             }
         })

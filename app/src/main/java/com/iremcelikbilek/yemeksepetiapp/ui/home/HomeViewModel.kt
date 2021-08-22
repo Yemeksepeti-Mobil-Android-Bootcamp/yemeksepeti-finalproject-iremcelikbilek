@@ -25,5 +25,4 @@ class HomeViewModel @Inject constructor(
     private fun getToken() = foodApiRepository.checkToken()
 
     private fun getCity(): String? = foodApiRepository.getCity()
-
 }

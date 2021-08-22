@@ -1,6 +1,5 @@
 package com.iremcelikbilek.yemeksepetiapp.ui.search
 
-import android.app.AlertDialog
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
@@ -13,10 +12,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.iremcelikbilek.yemeksepetiapp.R
 import com.iremcelikbilek.yemeksepetiapp.adapter.SearchRestaurantListAdapter
 import com.iremcelikbilek.yemeksepetiapp.data.entity.common.RestaurantData
+import com.iremcelikbilek.yemeksepetiapp.data.entity.search.SearchResponse
 import com.iremcelikbilek.yemeksepetiapp.databinding.FragmentSearchBinding
 import com.iremcelikbilek.yemeksepetiapp.utils.Resource
 import com.iremcelikbilek.yemeksepetiapp.utils.gone
 import com.iremcelikbilek.yemeksepetiapp.utils.show
+import com.iremcelikbilek.yemeksepetiapp.utils.showAlert
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -39,8 +40,8 @@ class SearchFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.searchRestaurantListRv.layoutManager = LinearLayoutManager(context)
-        binding.searchRestaurantListRv.adapter = adapter
+
+        initViews()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -66,6 +67,11 @@ class SearchFragment: Fragment() {
 
     }
 
+    private fun initViews() {
+        binding.searchRestaurantListRv.layoutManager = LinearLayoutManager(context)
+        binding.searchRestaurantListRv.adapter = adapter
+    }
+
     private fun observeSearchResult(newText: String?) {
         viewModel.getRestaurantListSearchResult(newText).observe(this, Observer {
             when(it.status) {
@@ -75,25 +81,21 @@ class SearchFragment: Fragment() {
 
                 Resource.Status.SUCCESS -> {
                     hideLoading()
-
-                    adapter.setSearchList(it.data)
-                    adapter.addListener(object: ISearchListOnClick{
-                        override fun onClick(item: RestaurantData) {
-                            findNavController().navigate(SearchFragmentDirections.actionSearchFragmentToMenuListFragment(item))
-                        }
-                    })
+                    setSearchData(it.data)
                 }
 
                 Resource.Status.ERROR -> {
-                    val dialog = AlertDialog.Builder(context)
-                        .setTitle("Error")
-                        .setMessage("${it.message}")
-                        .setPositiveButton("ok") { dialog, button ->
-                            dialog.dismiss()
-                        }
-                    dialog.show()
-
+                    showAlert(it.message)
                 }
+            }
+        })
+    }
+
+    private fun setSearchData(data: SearchResponse?) {
+        adapter.setSearchList(data)
+        adapter.addListener(object: ISearchListOnClick{
+            override fun onClick(item: RestaurantData) {
+                findNavController().navigate(SearchFragmentDirections.actionSearchFragmentToMenuListFragment(item))
             }
         })
     }

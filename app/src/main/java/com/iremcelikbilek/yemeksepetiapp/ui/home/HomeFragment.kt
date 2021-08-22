@@ -1,6 +1,5 @@
 package com.iremcelikbilek.yemeksepetiapp.ui.home
 
-import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,11 +13,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.iremcelikbilek.yemeksepetiapp.adapter.CategoryListAdapter
 import com.iremcelikbilek.yemeksepetiapp.adapter.HomeRestaurantListAdapter
 import com.iremcelikbilek.yemeksepetiapp.data.entity.category.CategoryData
+import com.iremcelikbilek.yemeksepetiapp.data.entity.category.CategoryResponse
 import com.iremcelikbilek.yemeksepetiapp.data.entity.common.RestaurantData
+import com.iremcelikbilek.yemeksepetiapp.data.entity.restaurantList.RestaurantListResponse
+import com.iremcelikbilek.yemeksepetiapp.data.entity.user.UserData
 import com.iremcelikbilek.yemeksepetiapp.databinding.FragmentHomeBinding
 import com.iremcelikbilek.yemeksepetiapp.utils.Resource
 import com.iremcelikbilek.yemeksepetiapp.utils.gone
 import com.iremcelikbilek.yemeksepetiapp.utils.show
+import com.iremcelikbilek.yemeksepetiapp.utils.showAlert
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -50,11 +53,9 @@ class HomeFragment: Fragment() {
         observeCategoryList()
 
         observeRestaurantList()
-
     }
 
     private fun initRecyclerViews() {
-
         binding.homeRv.layoutManager = LinearLayoutManager(context)
         binding.homeRv.adapter = restaurantListAdapter
 
@@ -71,28 +72,14 @@ class HomeFragment: Fragment() {
 
                 Resource.Status.SUCCESS -> {
                     hideLoading()
-
-                    restaurantListAdapter.setRestaurantList(it.data)
-                    restaurantListAdapter.addListener(object : IRestaurantListItemOnClick {
-                        override fun onClick(item: RestaurantData) {
-                            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToMenuListFragment(item))
-                        }
-                    })
+                    setRestaurantData(it.data)
                 }
 
                 Resource.Status.ERROR -> {
-                    val dialog = AlertDialog.Builder(context)
-                        .setTitle("Error")
-                        .setMessage("${it.message}")
-                        .setPositiveButton("ok") { dialog, button ->
-                            dialog.dismiss()
-                        }
-                    dialog.show()
-
+                    showAlert(it.message)
                 }
             }
         })
-
     }
 
     private fun observeCategoryList() {
@@ -104,28 +91,14 @@ class HomeFragment: Fragment() {
 
                 Resource.Status.SUCCESS -> {
                     hideLoading()
-                    categoryListAdapter.setCategoryList(it.data!!)
-                    categoryListAdapter.addListener(object: ICategoryItemOnClick {
-                        override fun onClick(item: CategoryData) {
-                            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToCategoryListFragment(item))
-                        }
-                    })
+                    setCategoryData(it.data)
                 }
 
                 Resource.Status.ERROR -> {
-                    val dialog = AlertDialog.Builder(context)
-                        .setTitle("Error")
-                        .setMessage("${it.message}")
-                        .setPositiveButton("ok") { dialog, button ->
-                            dialog.dismiss()
-                        }
-                    dialog.show()
-
+                    showAlert(it.message)
                 }
             }
-
         })
-
     }
 
     private fun observeUser() {
@@ -138,29 +111,40 @@ class HomeFragment: Fragment() {
 
                 Resource.Status.SUCCESS -> {
                     hideLoading()
-
-                    it.data?.data.let { userData ->
-                        if(userData != null) {
-                            binding.userNameTxt.text = "Hoşgeldin " + userData.personName + " " + userData.personLastName
-                        }else {
-                            binding.userNameTxt.text = "Hoşgeldin Misafir Kullanıcı"
-                        }
-                    }
+                    setUserData(it.data?.data)
                 }
 
                 Resource.Status.ERROR -> {
-                    val dialog = AlertDialog.Builder(context)
-                        .setTitle("Error")
-                        .setMessage("${it.message}")
-                        .setPositiveButton("ok") { dialog, button ->
-                            dialog.dismiss()
-                        }
-                    dialog.show()
-
+                    showAlert(it.message)
                 }
             }
-
         })
+    }
+
+    private fun setRestaurantData(data: RestaurantListResponse?) {
+        restaurantListAdapter.setRestaurantList(data)
+        restaurantListAdapter.addListener(object : IRestaurantListItemOnClick {
+            override fun onClick(item: RestaurantData) {
+                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToMenuListFragment(item))
+            }
+        })
+    }
+
+    private fun setCategoryData(data: CategoryResponse?) {
+        categoryListAdapter.setCategoryList(data)
+        categoryListAdapter.addListener(object: ICategoryItemOnClick {
+            override fun onClick(item: CategoryData) {
+                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToCategoryListFragment(item))
+            }
+        })
+    }
+
+    private fun setUserData(data: UserData?) {
+        if(data != null) {
+            binding.userNameTxt.text = "Hoşgeldin " + data.personName + " " + data.personLastName
+        }else {
+            binding.userNameTxt.text = "Hoşgeldin Misafir Kullanıcı"
+        }
     }
 
     private fun showLoading() {

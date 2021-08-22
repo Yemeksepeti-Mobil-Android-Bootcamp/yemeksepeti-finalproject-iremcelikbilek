@@ -1,6 +1,5 @@
 package com.iremcelikbilek.yemeksepetiapp.ui.profile.register
 
-import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import com.iremcelikbilek.yemeksepetiapp.R
 import com.iremcelikbilek.yemeksepetiapp.databinding.FragmentRegisterBinding
 import com.iremcelikbilek.yemeksepetiapp.utils.Resource
+import com.iremcelikbilek.yemeksepetiapp.utils.showAlert
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -35,6 +35,10 @@ class RegisterFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
         requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
 
+        registerBtnListener()
+    }
+
+    private fun registerBtnListener() {
         binding.registerButton.setOnClickListener {
             val name = binding.nameEdtTxt.text.toString()
             val lastname = binding.lastNameEdtTxt.text.toString()
@@ -42,29 +46,31 @@ class RegisterFragment: Fragment() {
             val email = binding.mailEdtTxt.text.toString()
             val password = binding.passwordEdtTxt.text.toString()
 
-            viewModel.register(name, lastname, phone, email, password).observe(viewLifecycleOwner, Observer {
-                when(it.status) {
-                    Resource.Status.LOADING -> {
-
-                    }
-
-                    Resource.Status.SUCCESS -> {
-                        findNavController().navigate(R.id.action_profileFragment_to_settingsFragment)
-
-                    }
-
-                    Resource.Status.ERROR -> {
-                        val dialog = AlertDialog.Builder(context)
-                            .setTitle("Error")
-                            .setMessage("${it.message}")
-                            .setPositiveButton("ok") { dialog, button ->
-                                dialog.dismiss()
-                            }
-                        dialog.show()
-
-                    }
-                }
-            })
+            observeRegister(name, lastname, phone, email, password)
         }
+    }
+
+    private fun observeRegister(
+        name: String,
+        lastname: String,
+        phone: String,
+        email: String,
+        password: String
+    ) {
+        viewModel.register(name, lastname, phone, email, password).observe(viewLifecycleOwner, Observer {
+            when(it.status) {
+                Resource.Status.LOADING -> {
+
+                }
+
+                Resource.Status.SUCCESS -> {
+                    findNavController().navigate(R.id.action_profileFragment_to_settingsFragment)
+                }
+
+                Resource.Status.ERROR -> {
+                    showAlert(it.message)
+                }
+            }
+        })
     }
 }

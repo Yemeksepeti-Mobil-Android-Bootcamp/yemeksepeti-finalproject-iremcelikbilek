@@ -11,7 +11,6 @@ import androidx.datastore.DataStore
 import androidx.datastore.preferences.Preferences
 import androidx.datastore.preferences.preferencesKey
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import com.iremcelikbilek.yemeksepetiapp.HomeActivity
@@ -31,7 +30,6 @@ class SplashFragment: Fragment() {
         lifecycleScope.launch {
             preferences.data.collectLatest {
                 if(it[preferencesKey<Boolean>("oneTime")] == true) {
-                    //requireView().findNavController().navigate(SplashFragmentDirections.actionSplashFragmentToHomeFragment())
                     startActivity(Intent(context, HomeActivity::class.java))
                     requireActivity().finish()
                 } else {

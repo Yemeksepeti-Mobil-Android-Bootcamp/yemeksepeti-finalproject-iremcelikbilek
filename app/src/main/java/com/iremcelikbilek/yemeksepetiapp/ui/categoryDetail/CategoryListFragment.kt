@@ -1,8 +1,6 @@
 package com.iremcelikbilek.yemeksepetiapp.ui.categoryDetail
 
-import android.app.AlertDialog
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,17 +10,12 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bumptech.glide.Glide
-import com.iremcelikbilek.yemeksepetiapp.R
 import com.iremcelikbilek.yemeksepetiapp.adapter.HomeRestaurantListAdapter
 import com.iremcelikbilek.yemeksepetiapp.data.entity.common.RestaurantData
+import com.iremcelikbilek.yemeksepetiapp.data.entity.restaurantList.RestaurantListResponse
 import com.iremcelikbilek.yemeksepetiapp.databinding.FragmentCategoriDetailListBinding
-import com.iremcelikbilek.yemeksepetiapp.ui.home.HomeFragmentDirections
 import com.iremcelikbilek.yemeksepetiapp.ui.home.IRestaurantListItemOnClick
-import com.iremcelikbilek.yemeksepetiapp.utils.Resource
-import com.iremcelikbilek.yemeksepetiapp.utils.gone
-import com.iremcelikbilek.yemeksepetiapp.utils.hide
-import com.iremcelikbilek.yemeksepetiapp.utils.show
+import com.iremcelikbilek.yemeksepetiapp.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -60,35 +53,29 @@ class CategoryListFragment: Fragment() {
                 }
 
                 Resource.Status.SUCCESS -> {
-
                     hideLoading()
-
-                    if(it.data?.data == null) {
-                        binding.noResultTxt.show()
-                    }else {
-                        binding.noResultTxt.gone()
-                        adapter.setRestaurantList(it.data)
-                        adapter.addListener(object : IRestaurantListItemOnClick {
-                            override fun onClick(item: RestaurantData) {
-                                findNavController().navigate(CategoryListFragmentDirections.actionCategoryListFragmentToMenuListFragment(item))
-                            }
-                        })
-                    }
+                    responseCheck(it.data)
                 }
 
                 Resource.Status.ERROR -> {
-                    val dialog = AlertDialog.Builder(context)
-                        .setTitle("Error")
-                        .setMessage("${it.message}")
-                        .setPositiveButton("ok") { dialog, button ->
-                            dialog.dismiss()
-                        }
-                    dialog.show()
-
+                   showAlert(it.message)
                 }
             }
         })
+    }
 
+    private fun responseCheck(data: RestaurantListResponse?) {
+        if(data?.data == null) {
+            binding.noResultTxt.show()
+        }else {
+            binding.noResultTxt.gone()
+            adapter.setRestaurantList(data)
+            adapter.addListener(object : IRestaurantListItemOnClick {
+                override fun onClick(item: RestaurantData) {
+                    findNavController().navigate(CategoryListFragmentDirections.actionCategoryListFragmentToMenuListFragment(item))
+                }
+            })
+        }
     }
 
     private fun initViews(view: View) {
