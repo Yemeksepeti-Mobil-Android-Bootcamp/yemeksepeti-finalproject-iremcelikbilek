@@ -14,6 +14,7 @@ This application is where you can see the restaurants in your city and order
 - [x] Order History [video](#history-screen-and-logout-video)
 - [x] Ability to use the application as a guest user
 - [x] Login, Register, Logout
+- [x] Internet Connnection Check 
 
 ## What did I use ?
 
