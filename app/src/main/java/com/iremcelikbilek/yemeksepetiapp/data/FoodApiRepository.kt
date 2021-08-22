@@ -13,7 +13,6 @@ class FoodApiRepository @Inject constructor(
     private var remoteDataSource: RemoteDataSource,
     private var localeDataSource: LocaleDataSource
 ) {
-
     fun register(registerRequest: RegisterRequest) = performAuthTokenNetworkOperation(
         call = {
             remoteDataSource.register(registerRequest)

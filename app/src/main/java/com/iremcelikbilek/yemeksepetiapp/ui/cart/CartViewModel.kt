@@ -17,7 +17,6 @@ class CartViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val foodApiRepository: FoodApiRepository
 ): ViewModel() {
-
     fun completeOrder(): LiveData<Resource<CompleteOrderResponse>> {
         return foodApiRepository.completeOrder(getToken())
     }
@@ -30,7 +29,7 @@ class CartViewModel @Inject constructor(
         return foodApiRepository.removeToCart(getToken(), restaurantId, menuId)
     }
 
-    private fun getToken(): String? = foodApiRepository.checkToken()
+    fun getToken(): String? = foodApiRepository.checkToken()
 
     fun calculatePrice(cardDataList: List<CartData>?): String {
         var totalPrice: Double = 0.0

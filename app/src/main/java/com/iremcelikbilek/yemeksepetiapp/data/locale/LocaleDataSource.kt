@@ -5,7 +5,6 @@ import javax.inject.Inject
 class LocaleDataSource @Inject constructor(
     private val sharedPreferencesManager: SharedPreferencesManager
 ) {
-
     fun saveToken(token: String) {
         sharedPreferencesManager.saveToken(token)
     }

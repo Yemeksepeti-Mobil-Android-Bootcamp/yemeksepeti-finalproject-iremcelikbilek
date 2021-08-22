@@ -27,13 +27,9 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class CityListFragment: Fragment() {
-
     private lateinit var binding: FragmentCityListBinding
-
     private val viewModel: CityListViewModel by viewModels()
-
     @Inject lateinit var preferences: DataStore<Preferences>
-
     private var cityListAdapter: CityListAdapter = CityListAdapter()
 
     override fun onCreateView(
@@ -47,9 +43,7 @@ class CityListFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         initViews()
-
         observeCityList()
     }
 
@@ -61,10 +55,6 @@ class CityListFragment: Fragment() {
     private fun observeCityList() {
         viewModel.getCityList().observe(viewLifecycleOwner, Observer {
             when(it.status) {
-                Resource.Status.LOADING -> {
-
-                }
-
                 Resource.Status.SUCCESS -> {
                     setData(it.data)
                 }
@@ -85,7 +75,6 @@ class CityListFragment: Fragment() {
                 lifecycleScope.launch {
                     saveOneTime()
                 }
-
                 viewModel.saveCity(item.id)
                 startActivity(Intent(context, HomeActivity::class.java))
                 requireActivity().finish()

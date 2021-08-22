@@ -17,9 +17,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class RegisterFragment: Fragment() {
-
     private val viewModel: RegisterViewModel by viewModels()
-
     private lateinit var binding: FragmentRegisterBinding
 
     override fun onCreateView(
@@ -34,7 +32,6 @@ class RegisterFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
-
         registerBtnListener()
     }
 
@@ -59,10 +56,6 @@ class RegisterFragment: Fragment() {
     ) {
         viewModel.register(name, lastname, phone, email, password).observe(viewLifecycleOwner, Observer {
             when(it.status) {
-                Resource.Status.LOADING -> {
-
-                }
-
                 Resource.Status.SUCCESS -> {
                     findNavController().navigate(R.id.action_profileFragment_to_settingsFragment)
                 }

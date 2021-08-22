@@ -24,10 +24,8 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class CartFragment : Fragment() {
-
     private lateinit var binding: FragmentCartBinding
     private val viewModel: CartViewModel by viewModels()
-
     private var cartAdapter : CartListAdapter = CartListAdapter()
 
     override fun onCreateView(
@@ -41,14 +39,15 @@ class CartFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         initViews()
 
-        observeCart()
-
-        cartAdapterListener()
-
-        completeOrderBtnListener()
+        if(viewModel.getToken() == "") {
+            showAlert("Sipariş verebilmek için önce giriş yapmalısınız.")
+        } else {
+            observeCart()
+            cartAdapterListener()
+            completeOrderBtnListener()
+        }
     }
 
     private fun cartAdapterListener() {
@@ -62,10 +61,6 @@ class CartFragment : Fragment() {
     private fun observeRemoveCartData(item: CartData) {
         viewModel.removeCartData(item.id, item.menu.id).observe(viewLifecycleOwner, Observer { response ->
             when(response.status) {
-                Resource.Status.LOADING -> {
-
-                }
-
                 Resource.Status.SUCCESS -> {
                     observeCart()
                 }
@@ -86,10 +81,6 @@ class CartFragment : Fragment() {
     private fun observeOrder() {
         viewModel.completeOrder().observe(viewLifecycleOwner, Observer {
             when(it.status) {
-                Resource.Status.LOADING -> {
-
-                }
-
                 Resource.Status.SUCCESS -> {
                     showDialog()
                 }
@@ -145,6 +136,7 @@ class CartFragment : Fragment() {
     private fun initViews() {
         binding.cartRv.layoutManager = LinearLayoutManager(context)
         binding.cartRv.adapter = cartAdapter
+        hideCartLayout()
     }
 
     private fun showDialog() {

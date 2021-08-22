@@ -9,7 +9,6 @@ import javax.inject.Inject
 class RemoteDataSource @Inject constructor(
     private val foodApiService: FoodApiService
 ): BaseDataSource() {
-
     suspend fun register(request: RegisterRequest) = getResult { foodApiService.register(request) }
 
     suspend fun login(request: LoginRequest) = getResult { foodApiService.login(request) }

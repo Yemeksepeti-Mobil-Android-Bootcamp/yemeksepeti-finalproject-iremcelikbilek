@@ -7,9 +7,9 @@ import com.iremcelikbilek.yemeksepetiapp.data.entity.citylist.CityData
 import com.iremcelikbilek.yemeksepetiapp.data.entity.citylist.CityListResponse
 import com.iremcelikbilek.yemeksepetiapp.databinding.ItemCityListBinding
 import com.iremcelikbilek.yemeksepetiapp.ui.citylist.ICityListItemOnClick
+import com.iremcelikbilek.yemeksepetiapp.utils.ifNotNull
 
 class CityListAdapter: RecyclerView.Adapter<CityListAdapter.CityListViewHolder>() {
-
     private var cityList: CityListResponse? = null
     private var listener: ICityListItemOnClick? = null
 
@@ -42,7 +42,9 @@ class CityListAdapter: RecyclerView.Adapter<CityListAdapter.CityListViewHolder>(
     }
 
     override fun onBindViewHolder(holder: CityListViewHolder, position: Int) {
-        holder.setItem(cityList?.data!![position], listener)
+        ifNotNull(cityList?.data?.elementAtOrNull(position)) {
+            holder.setItem(it, listener)
+        }
     }
 
     override fun getItemCount(): Int = cityList?.data?.size ?: 0

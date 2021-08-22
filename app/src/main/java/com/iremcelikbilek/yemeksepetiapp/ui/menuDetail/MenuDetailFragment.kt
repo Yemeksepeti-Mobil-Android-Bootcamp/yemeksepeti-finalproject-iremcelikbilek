@@ -9,16 +9,14 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.bumptech.glide.Glide
-import com.iremcelikbilek.yemeksepetiapp.R
 import com.iremcelikbilek.yemeksepetiapp.databinding.FragmentMenuDetailBinding
 import com.iremcelikbilek.yemeksepetiapp.utils.Resource
+import com.iremcelikbilek.yemeksepetiapp.utils.loadFromUrl
 import com.iremcelikbilek.yemeksepetiapp.utils.showAlert
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MenuDetailFragment: Fragment() {
-
     private lateinit var binding: FragmentMenuDetailBinding
     private val args by navArgs<MenuDetailFragmentArgs>()
     private val viewModel: MenuDetailViewModel by viewModels()
@@ -34,13 +32,9 @@ class MenuDetailFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         initViews(view)
-
         incrementMenuListener()
-
         removeMenuListener()
-
         addCartBtnListener()
     }
 
@@ -50,7 +44,7 @@ class MenuDetailFragment: Fragment() {
         binding.menuDetailDescriptionTxt.text = args.menuItem.description
         binding.menuPriceTxt.text = args.menuItem.price
         binding.menuDetailRestaurantName.text = args.restaurantName
-        Glide.with(view).load(args.menuItem.imageUrl).placeholder(R.drawable.loading).error(R.drawable.not_found).into(binding.menuDetailImg)
+        binding.menuDetailImg.loadFromUrl(args.menuItem.imageUrl)
     }
 
     private fun removeMenuListener() {
@@ -73,10 +67,6 @@ class MenuDetailFragment: Fragment() {
         binding.addCartBtn.setOnClickListener {
             viewModel.addCartData(args.restaurantId, args.menuItem.id).observe(viewLifecycleOwner, Observer {
                 when(it.status) {
-                    Resource.Status.LOADING -> {
-
-                    }
-
                     Resource.Status.SUCCESS -> {
                        findNavController().navigate(MenuDetailFragmentDirections.actionMenuDetailFragmentToCartFragment())
                     }

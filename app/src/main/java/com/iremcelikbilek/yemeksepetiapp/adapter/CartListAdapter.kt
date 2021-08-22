@@ -3,15 +3,14 @@ package com.iremcelikbilek.yemeksepetiapp.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.iremcelikbilek.yemeksepetiapp.R
 import com.iremcelikbilek.yemeksepetiapp.data.entity.cart.CartData
 import com.iremcelikbilek.yemeksepetiapp.data.entity.cart.CartListResponse
 import com.iremcelikbilek.yemeksepetiapp.databinding.ItemCartListBinding
 import com.iremcelikbilek.yemeksepetiapp.ui.cart.ICartItemOnClick
+import com.iremcelikbilek.yemeksepetiapp.utils.ifNotNull
+import com.iremcelikbilek.yemeksepetiapp.utils.loadFromUrl
 
 class CartListAdapter: RecyclerView.Adapter<CartListAdapter.CartListViewHolder>() {
-
     private var cartList: CartListResponse? = null
     private var listener: ICartItemOnClick? = null
 
@@ -19,8 +18,6 @@ class CartListAdapter: RecyclerView.Adapter<CartListAdapter.CartListViewHolder>(
         this.cartList = cartList
         notifyDataSetChanged()
     }
-
-    fun getCartList() = cartList
 
     fun addListener(listener: ICartItemOnClick) {
         this.listener = listener
@@ -30,13 +27,9 @@ class CartListAdapter: RecyclerView.Adapter<CartListAdapter.CartListViewHolder>(
         this.listener = null
     }
 
-    fun deleteItem() {
-        notifyDataSetChanged()
-    }
-
     class CartListViewHolder(var binding: ItemCartListBinding): RecyclerView.ViewHolder(binding.root) {
         fun setItem(item: CartData, listener: ICartItemOnClick?) {
-            Glide.with(binding.root.context).load(item.menu.imageUrl).placeholder(R.drawable.loading).error(R.drawable.not_found).into(binding.menuImg)
+            binding.menuImg.loadFromUrl(item.menu.imageUrl)
             binding.restaurantNameTxt.text = item.name
             binding.menuNameTxt.text = item.menu.name
             binding.priceTxt.text = item.menu.price
@@ -44,7 +37,6 @@ class CartListAdapter: RecyclerView.Adapter<CartListAdapter.CartListViewHolder>(
                 listener?.onClick(item)
             }
         }
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CartListViewHolder {
@@ -53,9 +45,10 @@ class CartListAdapter: RecyclerView.Adapter<CartListAdapter.CartListViewHolder>(
     }
 
     override fun onBindViewHolder(holder: CartListViewHolder, position: Int) {
-        holder.setItem(cartList?.data!![position], listener)
+        ifNotNull(cartList?.data?.elementAtOrNull(position)) {
+            holder.setItem(it, listener)
+        }
     }
 
     override fun getItemCount(): Int = cartList?.data?.size ?: 0
-
 }

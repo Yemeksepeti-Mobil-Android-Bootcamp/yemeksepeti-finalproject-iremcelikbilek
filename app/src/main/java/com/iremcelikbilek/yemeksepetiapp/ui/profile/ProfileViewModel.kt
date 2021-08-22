@@ -11,6 +11,5 @@ class ProfileViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val foodApiRepository: FoodApiRepository
 ): ViewModel() {
-
     fun checkToken(): String? = foodApiRepository.checkToken()
 }

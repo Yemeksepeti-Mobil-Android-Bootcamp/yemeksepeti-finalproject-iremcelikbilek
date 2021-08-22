@@ -11,6 +11,5 @@ class SplashViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val foodApiRepository: FoodApiRepository
 ): ViewModel() {
-
     fun getCity(): String? = foodApiRepository.getCity()
 }

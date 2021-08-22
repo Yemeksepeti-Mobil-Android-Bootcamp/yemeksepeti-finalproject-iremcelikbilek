@@ -3,15 +3,14 @@ package com.iremcelikbilek.yemeksepetiapp.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.iremcelikbilek.yemeksepetiapp.R
 import com.iremcelikbilek.yemeksepetiapp.data.entity.common.RestaurantData
 import com.iremcelikbilek.yemeksepetiapp.data.entity.restaurantList.RestaurantListResponse
 import com.iremcelikbilek.yemeksepetiapp.databinding.ItemHomeRestaurantListBinding
 import com.iremcelikbilek.yemeksepetiapp.ui.home.IRestaurantListItemOnClick
+import com.iremcelikbilek.yemeksepetiapp.utils.ifNotNull
+import com.iremcelikbilek.yemeksepetiapp.utils.loadFromUrl
 
 class HomeRestaurantListAdapter: RecyclerView.Adapter<HomeRestaurantListAdapter.HomeRestaurantListViewHolder>() {
-
     private var restaurantList: RestaurantListResponse? = null
     private var listener: IRestaurantListItemOnClick? = null
 
@@ -30,7 +29,7 @@ class HomeRestaurantListAdapter: RecyclerView.Adapter<HomeRestaurantListAdapter.
 
     class HomeRestaurantListViewHolder(var binding: ItemHomeRestaurantListBinding): RecyclerView.ViewHolder(binding.root) {
         fun setItem(item: RestaurantData, listener: IRestaurantListItemOnClick?) {
-            Glide.with(binding.root.context).load(item.imageUrl).placeholder(R.drawable.loading).error(R.drawable.not_found).into(binding.restaurantImg)
+            binding.restaurantImg.loadFromUrl(item.imageUrl)
             binding.restaurantNameTxt.text = item.name
             binding.minimumPriceTxt.text = item.minimumPrice
             binding.estimatedArrivalTimeTxt.text = item.estimatedArrivalTime
@@ -49,7 +48,9 @@ class HomeRestaurantListAdapter: RecyclerView.Adapter<HomeRestaurantListAdapter.
     }
 
     override fun onBindViewHolder(holder: HomeRestaurantListViewHolder, position: Int) {
-        holder.setItem(restaurantList?.data!![position], listener)
+        ifNotNull(restaurantList?.data?.elementAtOrNull(position)) {
+            holder.setItem(it, listener)
+        }
     }
 
     override fun getItemCount(): Int = restaurantList?.data?.size ?: 0

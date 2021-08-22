@@ -16,5 +16,4 @@ class SettingsViewModel @Inject constructor(
     fun logout() = foodApiRepository.logout()
 
     private fun getToken() = foodApiRepository.checkToken()
-
 }

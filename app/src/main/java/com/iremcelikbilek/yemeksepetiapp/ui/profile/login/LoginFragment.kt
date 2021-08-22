@@ -17,9 +17,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class LoginFragment: Fragment() {
-
     private val viewModel: LoginViewModel by viewModels()
-
     private lateinit var binding: FragmentLoginBinding
 
     override fun onCreateView(
@@ -34,12 +32,10 @@ class LoginFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
-
         loginBtnListener()
     }
 
     private fun loginBtnListener() {
-
         binding.loginBtn.setOnClickListener {
             val email = binding.emailEdtTxt.text.toString()
             val password = binding.passwordEdtTxt.text.toString()
@@ -51,10 +47,6 @@ class LoginFragment: Fragment() {
     private fun observeLogin(email: String, password: String) {
         viewModel.login(email, password).observe(viewLifecycleOwner, Observer {
             when(it.status) {
-                Resource.Status.LOADING -> {
-
-                }
-
                 Resource.Status.SUCCESS -> {
                     findNavController().navigate(R.id.action_profileFragment_to_settingsFragment)
                 }

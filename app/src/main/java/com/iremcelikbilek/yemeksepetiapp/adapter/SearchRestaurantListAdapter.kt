@@ -3,15 +3,13 @@ package com.iremcelikbilek.yemeksepetiapp.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.iremcelikbilek.yemeksepetiapp.R
 import com.iremcelikbilek.yemeksepetiapp.data.entity.common.RestaurantData
 import com.iremcelikbilek.yemeksepetiapp.data.entity.search.SearchResponse
 import com.iremcelikbilek.yemeksepetiapp.databinding.ItemHomeRestaurantListBinding
 import com.iremcelikbilek.yemeksepetiapp.ui.search.ISearchListOnClick
+import com.iremcelikbilek.yemeksepetiapp.utils.loadFromUrl
 
 class SearchRestaurantListAdapter: RecyclerView.Adapter<SearchRestaurantListAdapter.SearchRestaurantListViewHolder>() {
-
     private var searchList: SearchResponse? = null
     private var listener: ISearchListOnClick? = null
 
@@ -30,7 +28,7 @@ class SearchRestaurantListAdapter: RecyclerView.Adapter<SearchRestaurantListAdap
 
     class SearchRestaurantListViewHolder(var binding: ItemHomeRestaurantListBinding): RecyclerView.ViewHolder(binding.root) {
         fun setItem(item: RestaurantData, listener: ISearchListOnClick?) {
-            Glide.with(binding.root.context).load(item.imageUrl).placeholder(R.drawable.loading).error(R.drawable.not_found).into(binding.restaurantImg)
+            binding.restaurantImg.loadFromUrl(item.imageUrl)
             binding.restaurantNameTxt.text = item.name
             binding.minimumPriceTxt.text = item.minimumPrice
             binding.estimatedArrivalTimeTxt.text = item.estimatedArrivalTime
@@ -53,5 +51,4 @@ class SearchRestaurantListAdapter: RecyclerView.Adapter<SearchRestaurantListAdap
     }
 
     override fun getItemCount(): Int = searchList?.data?.size ?: 0
-
 }

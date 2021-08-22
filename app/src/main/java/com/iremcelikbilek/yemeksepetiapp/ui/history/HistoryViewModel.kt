@@ -14,7 +14,6 @@ class HistoryViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val foodApiRepository: FoodApiRepository
 ): ViewModel() {
-
     fun getHistoryOrderList(): LiveData<Resource<HistoryResponse>> {
         return foodApiRepository.getHistoryOrderList(getToken())
     }

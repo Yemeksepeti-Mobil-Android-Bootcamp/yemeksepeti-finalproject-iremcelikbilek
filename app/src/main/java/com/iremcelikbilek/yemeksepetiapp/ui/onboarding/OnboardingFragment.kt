@@ -23,11 +23,8 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class OnboardingFragment: Fragment() {
-
     private lateinit var binding: FragmentOnboardingBinding
-
     @Inject lateinit var preferences: DataStore<Preferences>
-
     private val onboardingAdapter = OnboardingAdapter(
         listOf(
             OnboardingData("Order Meal", "Browse the menu \n and order directly from \n the application", "onboarding1.json"),
@@ -47,9 +44,7 @@ class OnboardingFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         initViews()
-
         viewPagerOnPageChangedCallback()
     }
 
@@ -72,7 +67,6 @@ class OnboardingFragment: Fragment() {
                         lifecycleScope.launch {
                             saveOnboarding()
                         }
-
                         requireView().findNavController().navigate(OnboardingFragmentDirections.actionOnboardingFragmentToCityListFragment())
                     }
                 } else {

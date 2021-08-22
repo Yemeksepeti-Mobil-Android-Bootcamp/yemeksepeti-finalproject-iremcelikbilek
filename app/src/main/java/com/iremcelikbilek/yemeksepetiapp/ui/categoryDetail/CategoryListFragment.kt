@@ -20,11 +20,8 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class CategoryListFragment: Fragment() {
-
     private lateinit var binding: FragmentCategoriDetailListBinding
-
     private val viewModel: CategoryDetailViewModel by viewModels()
-
     private var adapter: HomeRestaurantListAdapter = HomeRestaurantListAdapter()
     private val args by navArgs<CategoryListFragmentArgs>()
 
@@ -39,9 +36,7 @@ class CategoryListFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         initViews()
-
         observeRestaurantListByCategoryId(args.categoryData.id)
     }
 

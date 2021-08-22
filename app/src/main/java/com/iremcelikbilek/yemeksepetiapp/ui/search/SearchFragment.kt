@@ -22,7 +22,6 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class SearchFragment: Fragment() {
-
     private lateinit var binding: FragmentSearchBinding
     private val adapter : SearchRestaurantListAdapter = SearchRestaurantListAdapter()
     private val viewModel: SearchViewModel by viewModels()
@@ -40,7 +39,6 @@ class SearchFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         initViews()
     }
 
@@ -64,7 +62,6 @@ class SearchFragment: Fragment() {
                 return true
             }
         })
-
     }
 
     private fun initViews() {
@@ -114,5 +111,4 @@ class SearchFragment: Fragment() {
         super.onPause()
         adapter.removeListener()
     }
-
 }

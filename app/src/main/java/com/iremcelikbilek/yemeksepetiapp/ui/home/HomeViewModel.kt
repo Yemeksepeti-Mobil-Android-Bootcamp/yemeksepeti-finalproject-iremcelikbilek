@@ -15,7 +15,6 @@ class HomeViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val foodApiRepository: FoodApiRepository
 ) : ViewModel() {
-
     fun getRestaurantList(categoryId: String? = null): LiveData<Resource<RestaurantListResponse>> = foodApiRepository.getRestaurantList(getCity(), categoryId)
 
     fun getCategoryList() : LiveData<Resource<CategoryResponse>> = foodApiRepository.getCategoryList()

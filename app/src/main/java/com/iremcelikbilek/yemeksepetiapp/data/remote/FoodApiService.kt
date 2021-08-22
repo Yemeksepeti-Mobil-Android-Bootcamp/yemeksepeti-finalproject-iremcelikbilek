@@ -52,7 +52,7 @@ interface FoodApiService {
         @Query("count") count: Int?
     ): Response<AddCartResponse>
 
-    @GET("removeToBasket")
+    @DELETE("removeToBasket")
     suspend fun removeToCart(
         @Header("token") token: String?,
         @Query("restaurant") restaurantId: String?,
@@ -64,5 +64,4 @@ interface FoodApiService {
 
     @GET("history")
     suspend fun getHistoryOrderList(@Header("token") token: String?) : Response<HistoryResponse>
-
 }

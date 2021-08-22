@@ -14,14 +14,9 @@ class CityListViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val foodApiRepository: FoodApiRepository
 ): ViewModel() {
-
     fun getCityList(): LiveData<Resource<CityListResponse>> = foodApiRepository.getCityList()
 
     fun saveCity(cityId: String) {
         foodApiRepository.saveCity(cityId)
-    }
-
-    fun getCity(): String? {
-        return foodApiRepository.getCity()
     }
 }

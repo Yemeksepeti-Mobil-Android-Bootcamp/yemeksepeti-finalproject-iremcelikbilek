@@ -24,7 +24,6 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class SplashFragment: Fragment() {
-
     private lateinit var binding: FragmentSplashBinding
     private val viewModel : SplashViewModel by viewModels()
     @Inject lateinit var preferences: DataStore<Preferences>

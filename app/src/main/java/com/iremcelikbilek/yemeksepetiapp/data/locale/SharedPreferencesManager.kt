@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.SharedPreferences
 
 class SharedPreferencesManager(context: Context) {
-
     companion object {
         const val TOKEN = "com.iremcelikbilek.yemeksepetiapp.TOKEN"
         const val CITY_KEY = "CityId"

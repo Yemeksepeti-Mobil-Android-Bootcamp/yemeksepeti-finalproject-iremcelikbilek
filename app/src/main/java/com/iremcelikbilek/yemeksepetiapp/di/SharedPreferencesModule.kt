@@ -12,7 +12,6 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 @Module
 @InstallIn(ActivityRetainedComponent::class)
 class SharedPreferencesModule {
-
     @Provides
     fun provideSharedPreferencesManager(@ApplicationContext context: Context): SharedPreferencesManager {
         return SharedPreferencesManager(context)

@@ -18,7 +18,6 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class HistoryFragment: Fragment() {
-
     private lateinit var binding: FragmentHistoryBinding
     private val viewModel: HistoryViewModel by viewModels()
     private var historyAdapter: HistoryListAdapter = HistoryListAdapter()
@@ -34,9 +33,7 @@ class HistoryFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         initViews()
-
         observeHistoryList()
     }
 

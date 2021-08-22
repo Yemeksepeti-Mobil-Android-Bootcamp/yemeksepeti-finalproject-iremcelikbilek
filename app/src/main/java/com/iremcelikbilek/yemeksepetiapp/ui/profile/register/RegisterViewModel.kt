@@ -15,7 +15,6 @@ class RegisterViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val foodApiRepository: FoodApiRepository
 ) : ViewModel() {
-
     fun register(name: String, lastname: String, phone: String, email: String, password: String): LiveData<Resource<RegisterResponse>> {
         val registerRequest = RegisterRequest(name, lastname, phone, email, password)
         return foodApiRepository.register(registerRequest)

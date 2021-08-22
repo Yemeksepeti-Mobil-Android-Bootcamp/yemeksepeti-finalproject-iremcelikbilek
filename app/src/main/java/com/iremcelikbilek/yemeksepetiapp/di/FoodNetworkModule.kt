@@ -17,7 +17,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 @Module
 @InstallIn(SingletonComponent::class)
 class FoodNetworkModule {
-
     @Provides
     fun provideRemoteDataSource(
         apiService: FoodApiService,
@@ -61,5 +60,4 @@ class FoodNetworkModule {
     fun provideEndpoint(): Endpoint {
         return Endpoint("https://yemeksepeti.iremcelikbilek.workers.dev/")
     }
-
 }

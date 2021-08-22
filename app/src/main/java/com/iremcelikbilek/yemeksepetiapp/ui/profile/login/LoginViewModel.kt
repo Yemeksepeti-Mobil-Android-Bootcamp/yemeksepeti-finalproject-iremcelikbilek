@@ -13,7 +13,6 @@ import javax.inject.Inject
 class LoginViewModel @Inject constructor(
     private val foodApiRepository: FoodApiRepository
 ): ViewModel() {
-
     fun login(email: String, password: String): LiveData<Resource<LoginResponse>> {
         val loginRequest = LoginRequest(email, password)
         return foodApiRepository.login(loginRequest)
